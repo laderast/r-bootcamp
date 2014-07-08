@@ -16,10 +16,10 @@ The content of each module is as follows:
 5. Databases, Packages, and Beyond.
 
 Each folder contains the following files:
-moduleX.R - The script
-moduleX.RData - workspace consisting of data to manipulate
-moduleX-test-your-knowledge.R - Multiple Choice Quiz to test your knowledge
-moduleX-problem-set.R - All the problems in moduleX in an easy to read format (these
-  are also included in ModuleX.R)
-moduleX-final-problem.R - Final assignment
+  moduleX.R - The script
+  moduleX.RData - workspace consisting of data to manipulate
+  moduleX-test-your-knowledge.R - Multiple Choice Quiz to test your knowledge
+  moduleX-problem-set.R - All the problems in moduleX in an easy to read format (these
+    are also included in ModuleX.R)
+  moduleX-final-problem.R - Final assignment
 
