@@ -206,7 +206,7 @@ source("testScript.R")
 
 ####QUESTION 4-1: Modify the Script to produce a png file instead of a pdf file.
 
-###***FINAL PROBLEM: Fill out the included "myFirstScript.R" file 
+###***FINAL PROBLEM: Fill out the included "module1-final-problem.R" file 
 ###***to do the following:
 ###***1. Set current working directory 
 ###***2. load in "mouseData.txt" 
