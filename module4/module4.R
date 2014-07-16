@@ -1,0 +1,225 @@
+##############################################################
+###R Bootcamp for Programming
+###Module 4: Merging, Visualizing, Functions
+##############################################################
+
+##load the module up
+load("module4.RData")
+##look around
+ls()
+
+##############################
+###Part 1: Merging
+##############################
+##Merging dataframes
+##Suppose you have two dataframes that have a common identifier (such as MouseID)
+###and you want to merge them.
+
+##if you want to merge on row names, you can use the following form: 
+merge(MouseFrame, MouseCovariates)
+
+##if you want to merge on an identical column names in both data frames, this works:
+merge(MouseFrame, MouseCovariates, by="MouseID")
+
+##if the column names were different, we can specify them by using the by.x and 
+##by.y arguments:
+merge(MouseFrame, MouseCovariates, by.x="MouseID", by.y="MouseID")
+
+##These merges are known as natural joins, because we match every element that we can 
+##in the first frame with the second. If we insist on including every row in the first frame,
+##even though it doesn't occur in the second frame, it's called a left outer join.  
+##Think of the first frame as the left frame, and the second frame as the right frame.
+
+merge(MouseFrame, MouseCovariates, by = "MouseID", all.x =TRUE)
+
+##similarly, if we insist on including all the rows in the second frame even though
+##they don't occur in the first, it's called a right outer join.
+
+merge(MouseFrame, MouseCovariates, by = "MouseID", all.y =TRUE)
+
+####PROBLEM 1-1. How would we specify a full outer join, i.e., a join that includes
+####all rows from both frames, regardless of match?
+
+##Note that these kinds of joins are also used in Databases, which we will talk a 
+##little about in the next module.
+
+####PROBLEM 1-2. Read the documentation for ?merge.  Do a natural join of MouseFrame
+####and MouseBalanceTimeSeries and do not sort by MouseID.
+
+##############################
+###Part 2: Visualizing Data
+##############################
+
+##We've alreadly seen some methods for plotting 1-dimensional data, such as 
+##hist() and boxplot(). boxplot() will also work on data.frames and give you
+##a boxplot per variable.
+
+##we need to cast MouseBalanceTimeSeries as a data.frame since it is a matrix:
+boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After")
+
+##We can label the x axes and y axes by supply the xlab and ylab argument
+boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After Treatment",
+        xlab = "Condition", ylab = "Time on Balance Beam (s)")
+
+##This almost looks good, but we can't read the labels for the different
+##experiments. If we read the help file for ?par() (the graphical parameters),
+##we can adjust those labels by specifying a las = 3 argument:
+
+boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After Treatment",
+        xlab = "Condition", ylab = "Time on Balance Beam (s)", las=3)
+
+##let's remove the x label to make it clearer:
+
+boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After Treatment",
+        ylab = "Time on Balance Beam (s)", las=3)
+
+##what about xy plots? R is equipped to do those as well.
+data(iris)
+plot(iris[,1], iris[,2])
+
+####PROBLEM 2-1. Add arguments to the above plot. Label the x-axis "Sepal Length"
+####and the y-axis "Sepal.Width".  Make the title "Iris Dataset". Save it to a pdf
+####with the name "Iris-plot.pdf".
+
+####PROBLEM 2-2. Read the documentation for pairs(). Try it out on the iris dataset
+####(take out the "species" variable.)
+####What does this plot do? Why is it useful?
+
+##what about pie charts? Pie charts are evil. They are a poor representation of data,
+##and make proportions difficult to compare.  If you really must, read the help file
+##for ?pie.  
+
+##as an alternative, consider the stacked bar plot.  
+
+##############################
+###Part 3: Functions and Scope
+##############################
+##Let's make a function.  Functions are defined with the command function() and 
+##a signature, which describes the arguments.
+
+sqrFun <- function(x) {
+  sqrVal <- x^2
+  #return the value
+  sqrVal
+}
+
+##note that we didn't define what x has to be. For S3 functions, there is no 
+##explicit type checking. S4 objects and methods (which are beyond this bootcamp),
+##do have explicit signature checks, which can be helpful in software development.
+##For right now, however, don't worry about them.
+
+####PROBLEM 3-1: Predict the output of each of these invocations of sqrFun()
+sqrFun(5)
+sqrFun(c(1,2,3))
+sqrFun("STRING")
+
+##Using identity functions such as class() as is.data.frame()
+##or is.matrix(), we can be more explicit about our inputs.
+
+sqrFun <- function(x) {
+  if(is.numeric(x)){
+  sqrVal <- x^2
+  #return the value
+  sqrVal}
+  else{stop("Not a numeric input")}
+}
+
+####PROBLEM 3-2: Change the above function to accept only single numeric inputs.
+####Hint: use length()
+
+##If you'd like to return multiple values, such as mean and sd, you can use a list.
+##it's best to use a named list to return results.
+
+meanSdFun <- function(vec){
+  #test to see if input is a vector and at least length 3
+  if(is.numeric(x) && length(x) > 2){
+      meanRes <- mean(x)
+      sdRes <- sd(x)
+      #store the results in a list
+      resList <- list(mean=meanRes, sd=sdRes)
+      #return results
+      resList
+  }
+  else {stop("Not a numeric vector")}
+}
+
+results <- meanSdFun(c(2,5,7))
+results[["mean"]]
+results$sd
+
+##We can also define default values for arguments by specifying them in the signature:
+
+plotXYFunc <- function(x,y,linecolor="red", plotTitle="X vs Y"){
+  plot(x,y,col=linecolor, type="l", main=plotTitle)
+}
+
+##use default arguments
+plotXYFunc(x=c(1,2,3),y=c(2,4,6))
+##specify arguments
+plotXYFunc(x=c(1,2,3),y=c(2,4,6), linecolor="blue", plotTitle="Stuff vs Stuff")
+
+
+####PROBLEM 3-3: Modify plotXYFunc to include a "fileout" argument with default
+####value "XYplot.pdf". Change the line type to stairsteps (refer to 
+####http://www.statmethods.net/graphs/line.html for more info). Modify the code to 
+####output a pdf file with fileout as its name.
+
+##One important thing we need to discuss about functions. That of variable scope.
+##Variable scope has to do with whether a variable "exists" in a certain "universe".
+##This 'universe' could be the workspace (global scope), or a function (local scope).  
+##We've mostly been using global variables by defining them in the workspace.
+##
+##However, in functions, we can also define variables on the fly.  However, because
+##of scope, you can't access a variable that was defined in a function in the workspace.
+##for example, say I make a function and define an internal Variable intVar:
+##
+##another way to think of it, is if you define a variable in brackets, anything in those
+##brackets can use that variable. Outside of those brackets, the variable doesn't exist.
+
+testFun <- function(xVec, yVec){
+  intVar <- c(xVec, yVec)
+  outVar <- intVar^2
+  outVar
+}
+
+testFun(xVec=c(1,5),yVec=c(4,6))
+##intVar doesn't exist outside of the function (local scope)
+intVar
+
+##however, if we globally define a variable in the workspace, a function can "see" this
+##variable and access it.  
+
+globVar <- 30
+
+testFun2 <- function(x){
+  out <- x + globVar
+  out
+}
+
+testFun2(50)
+
+##This is the cause of many headaches, in that you can write a function that depends on 
+##a global variable, attempt to run the function in a workspace where that global 
+##variable isn't defined, and get an error.
+##
+##The point is, be careful about naming variables and be explicit about passing variables
+##into functions. It's easy to prototype code that accidentally depends on global 
+##variables that are not explicitly passed into the function. 
+
+###***FINAL PROBLEM: Write a function with the following signature:
+###***meanWithNA <- function(x)
+###***Assume x is a vector and has NAs. Write the function such that it eliminates NAs
+###***and returns the mean of the remaining values in the vector. If the length of 
+###***remaining values is 0, have the function return NA.
+
+###***Use this function to revise your rowMeans for each data.frame in mouseExpList 
+###***(provided as an data object in module4). 
+###***Write another function with the following signature:
+###***compareMTwithRowMean <- function(mazeTime, rowMean)
+###***and have it output a vector that is 1 if mazeTime < rowMean, 0 if not. 
+###***Apply this function to mazeTime3 and rowMean. Count the number of 1s and 0s
+###***for each data set.  Based on this number, do you think the mice learned how
+###***to run the maze faster?
+
+
+

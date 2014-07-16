@@ -1,4 +1,8 @@
+#####################################################################
+###R Bootcamp for Programming
 ###Module 3: Matrices, Iterating, Applying, Deciding, and Lists
+####################################################################
+
 ###Load up the module workspace
 load("Module3.RData")
 
@@ -234,18 +238,20 @@ testList[[dd]]
 ##is to store results when you're batch processing (i.e. processing a bunch of
 ##files)
 
-##let's load four different sets of data (four different experiments)
+##let's load three different sets of data (from three different experiments)
 ##each file begins with "mouseExpt", so let's use that as a pattern
+##we'll store the results in a list.
 
-mouseExpList <- list
+mouseExpList <- list()
 mouseExps <- list.files(pattern="mouseExpt")
 for(mm in mouseExps){
-   mdata <- read.table(mm, sep="\t", header=TRUE)
-   mouseExpList[[mm]] <- mdata
+  mdata <- read.table(mm, sep="\t", header=TRUE, row.names=1)
+  mouseExpList[[mm]] <- mdata
 }
 
 ###***FINAL PROBLEM: For each data frame in mouseExpList, calculate the row sums
-###***and add it as a column to the data.frame with the name "rowSum". Save each 
+###***and add it as a column to the data.frame with the name "rowMean". Save each 
 ###***modified data frame into a new list with the same names for each slot.
 
-
+###***Do you notice anything about the data? What would be one way to deal with
+###***the issues in the data?
