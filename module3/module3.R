@@ -87,11 +87,10 @@ mat[,1]
 mat["BE",]
 mat[2,]
 
-####QUESTION 1-1: for each column of mat, print the name and the column sum
+####QUESTION 2-1: for each column of mat, print the name and the column sum
 ####hint: iterate from 1 to ncol(mat)
 
-
-####QUESTION 1-2: How do we access multiple rows or columns?
+####QUESTION 2-2: How do we access multiple rows or columns?
 ####grab the first two rows of mat
 
 ##Accessing a particular cell of a matrix
@@ -160,16 +159,16 @@ for(i in 1:length(weights)){
 
 MouseBalanceTimeSeries
 
-####QUESTION 3-1: What do you notice about this time series? Is the data complete?
+####QUESTION 4-1: What do you notice about this time series? Is the data complete?
 
 ##Let's compare row means (within-mouse). We can do this using apply():
 ##The margin argument sets whether we apply the function to rows (1) or columns(2).
 
-apply(MouseBalanceTimeSeries[1:4], MARGIN=1, mean)
+apply(MouseBalanceTimeSeries[1:4,], MARGIN=1, mean)
 
-####QUESTION 3-1: What is the output of the above command? Is it a matrix or a vector?
+####QUESTION 4-2: What is the output of the above command? Is it a matrix or a vector?
 
-####QUESTION 3-2: Compare the row means of the first three columns 
+####QUESTION 4-3: Compare the row means of the first three columns 
 ####(pre-treatment) to the last three columns (post-treatment) for the 
 ####first four rows of MouseBalanceTimeSeries.  Would you  
 ####say there is a difference between pre and post treatment mice?
@@ -186,20 +185,31 @@ apply(MouseBalanceTimeSeries[1:4], MARGIN=1, mean)
 
 MBTSfiltered <- na.omit(MouseBalanceTimeSeries)
 
+##we can see the rows filtered out as an attribute called na.action on the 
+##MBTSfiltered object:
+attributes(MBTSfiltered)$na.action
+
 ##Applying over a set of factors
 ##tapply() is for when you have a vector for grouping (such as a factor)
 ##and you want to apply a function to each group
 ##Here we take the mean weight by Strain
 tapply(MouseFrame$Weight, MouseFrame$Strain, mean)
 
-####QUESTION 3-3: Use tapply to compute the first (pre) and fourth (post) column means
+####QUESTION 4-4: Use tapply to compute the first (pre) and fourth (post) column means
 ####by Strain (remember, the identifiers are identical in both MouseFrame and 
 ####MouseBalanceTimeSeries, so you can use the Strain column in MouseFrame on 
 ####MouseBalanceTimeSeries. Remember to remove missing values. Does the data appear 
 ####to have Strain specific differences in column means? 
 ####If so, between which comparison? (B6 pre to B6 post, or B6 pre to D2 pre or...)
 
-###Part 4: Lists, Batch processing, and Storing Results
+
+##There are many other apply-type methods.  One of the best packages for aggregation/
+##apply methods is Hadley Wickham's plyr package. It is a bit quirky, but provides 
+##efficient ways to apply functions across a variety of data structures.
+
+########################################################
+##Part 5: Lists, Batch processing, and Storing Results
+########################################################
 ##Lists are a general data structure. Each slot can be named and can hold any R
 ##Object.  
 testList <- list(a=c(1,4,5), b=data(iris), c="STRING")
@@ -221,7 +231,7 @@ testList[["d"]] <- "ANOTHER STRING"
 ##think about this is that the double brackets are accessing the object, and
 ##then we can subset within the object.
 
-####QUESTION 4-1: Guess what subset each of the following statements accesses
+####QUESTION 5-1: Guess what subset each of the following statements accesses
 ####from testList.
 ####Was your guess correct?
 

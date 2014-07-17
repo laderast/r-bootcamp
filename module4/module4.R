@@ -90,6 +90,14 @@ plot(iris[,1], iris[,2])
 ##for ?pie.  
 
 ##as an alternative, consider the stacked bar plot.  
+##subset first ten rows so barplots aren't equal sized
+smFrame <- MouseFrame[1:10,]
+##tabulate the Gender/Strain cases
+tab <- table(smFrame$Gender, smFrame$Strain)
+##produce a stacked barplot allowing to compare the distribution of males/females
+##within B6 and D2 strains
+barplot(tab, col=c("blue", "red"), legend=rownames(tab), main = 
+    "Barplot comparing Gender within Strain")
 
 ##############################
 ###Part 3: Functions and Scope
@@ -162,7 +170,9 @@ plotXYFunc(x=c(1,2,3),y=c(2,4,6), linecolor="blue", plotTitle="Stuff vs Stuff")
 ####PROBLEM 3-3: Modify plotXYFunc to include a "fileout" argument with default
 ####value "XYplot.pdf". Change the line type to stairsteps (refer to 
 ####http://www.statmethods.net/graphs/line.html for more info). Modify the code to 
-####output a pdf file with fileout as its name.
+####output a pdf file with fileout as its name.  If fileout=NULL, simply display 
+####the graph instead of writing it to a file.
+
 
 ##One important thing we need to discuss about functions. That of variable scope.
 ##Variable scope has to do with whether a variable "exists" in a certain "universe".

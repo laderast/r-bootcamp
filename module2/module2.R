@@ -252,7 +252,9 @@ MouseFrame[,c(TRUE,TRUE,FALSE)]
 
 ####QUESTION 3-2: How would we select every third row? Hint: help("%%")
 
+#######################################################
 ##Part 4: Filtering
+#######################################################
 ##filtering operations are done by generating a boolean vector using a comparator
 ##such as <, >, or ==
 ##Here's how to filter on a vector to select those weights with only 
