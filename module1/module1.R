@@ -12,12 +12,13 @@
 help()
 
 ##R can be run from the command line, or the R interpreter.  It's probably
-##easiest to run it from an IDE such as RStudio.
+##easiest to run it from an IDE such as RStudio when working through
+##these modules.
 
 ##Installing R-studio:
 ##http://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf
 
-##An Introduction to R
+##Much of this bootcamp is derived from An Introduction to R
 ##http://cran.r-project.org/doc/manuals/R-intro.pdf
 
 
@@ -38,7 +39,13 @@ list.files()
 ##change the following command to the directory with the module 1 files.
 ##note that even on windows, we use "/" (forward slash) rather than
 ##"\" (reverse slash)
+##for windows buffs
 setwd("c:/")
+##for linux/mac os x buffs
+setwd("~/Desktop")
+
+##set your working directory to where the "module1.RData" object is
+
 
 ##loading a workspace
 ##You can also load workspaces via "Load Workspace" under the File menu
@@ -60,7 +67,7 @@ rm(testObject)
 ##obviously don't run this right now
 rm(list=ls())
 
-####QUESTION 1-1: how does this work? Read the help file for 
+####QUESTION 0-1: how does this work? Read the help file for 
 ####?rm
 
 
@@ -173,13 +180,13 @@ dev.off()
 
 
 ##############################
-###Part 3: Saving Data
+###Part 2: Saving Data
 ##############################
 ##Saving data to table format is done using the write.table() command:
 ##Let's write mouseData to a csv file by changing our sep argument
 write.table(mouseData, file="mouseData2.csv", sep=",")
 
-####PROBLEM 3-1: Examine the output file mouseData2.csv in a text editor.
+####PROBLEM 2-1: Examine the output file mouseData2.csv in a text editor.
 ####What do you notice about this file? Is the number of columns equal
 ####to the number of entries in the header? If not, why do you think this
 ####is the case?
@@ -194,7 +201,7 @@ write.table(mouseData, file="mouseData2.csv", sep=",", row.names=FALSE)
 
 
 ##############################
-###Part 4: Scripting
+###Part 3: Scripting
 ##############################
 ##we can save a series of R commands to produce a script.
 ##Scripts are the basis of workflows and pipelines.
@@ -204,7 +211,7 @@ write.table(mouseData, file="mouseData2.csv", sep=",", row.names=FALSE)
 ##Let's run a script - what does it output?
 source("testScript.R")
 
-####QUESTION 4-1: Modify the Script to produce a png file instead of a pdf file.
+####QUESTION 3-1: Modify the Script to produce a png file instead of a pdf file.
 
 ###***FINAL PROBLEM: Fill out the included "module1-final-problem.R" file 
 ###***to do the following:
