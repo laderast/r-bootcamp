@@ -3,6 +3,8 @@
 ###Module 3: Matrices, Iterating, Applying, Deciding, and Lists
 ####################################################################
 
+##remember to change your working directory!
+
 ###Load up the module workspace
 load("Module3.RData")
 
@@ -25,17 +27,18 @@ sumweights
 ##use when you don't need to access the index
 ##very similar to python
 
+sumweights <- 0
 for(we in weights){
   sumweights <- sumweights + we
 }
 sumweights
 
-####QUESTION 1-3: how do we get the average using sumweights?
+####QUESTION 1-1: how do we get the average using sumweights?
 ####Hint: what would be a programmatic way to get n?
 
 ##while() loops are also available, when you have a condition
-##note that cat() is like print in other languages, in that it concatenates 
-##the objects
+##note that cat() is like "print" in other languages, in that it concatenates 
+##the objects you pass to it.
 
 sumweights <- 0
 while(sumweights < 100){
@@ -44,6 +47,8 @@ while(sumweights < 100){
 }
 sumweights
 
+##when we talk about functions, we can talk more about a more programmatic
+##way to process elements other than a for loop.  
 
 #################################
 ###Part 2: Matrices
@@ -78,10 +83,14 @@ nrow(mat)
 ncol(mat)
 
 ##accessing rows and columns is similar to data frames
-##can a column either by number or by name
+##can call a column either by number or by name
 mat[,"Q"]
 mat[,1]
-##however, unlike data frames, mat$Q doesn't work
+##note, however, unlike data frames, mat$Q doesn't work
+##if you need data.frame accessors, you can always cast a matrix to
+##a data.frame:
+dfMat <- data.frame(mat)
+dfMat$Q
 
 ##similarly, we can access rows
 mat["BE",]
@@ -140,6 +149,15 @@ for(i in 1:length(weights)){
   }
 }
 
+##else is also an option
+for(i in 1:length(weights)){
+  if(weights[i] < 50 && weights[i] > 20){
+    cat(weights[i], "\n")
+  }
+  else{cat("weight not in range", "\n")}
+}
+
+
 
 #################################
 ###Part 4: applying
@@ -149,13 +167,14 @@ for(i in 1:length(weights)){
 ##a data frame, a matrix, or a list.  R includes functions to do this with without
 ##resorting to for loops.  
 
-##MouseBalanceTimeSeries is a matrix where two strains of mice (B6 - alcohol preferrring
-##and D2 - non-preferring) are given alcohol and a balance beam test in triplicate 
-##(measured in seconds).  They are then treated with an experimental treatment and 
-##then retested on the balance beam after 1 hr.
+##MouseBalanceTimeSeries is a matrix where two strains of mice (B6 - alcohol preferring
+##and D2 - non-preferring) are given alcohol followed by a balance beam test in 
+##triplicate (measured in seconds).  They are then treated with an experimental 
+##treatment and then retested on the balance beam after 1 hr.
 
 ##Note that the mouse identifiers (rownames) in MouseBalanceTimeSeries are identical 
-##to those in MouseFrame
+##to those in MouseFrame.
+rownames(MouseFrame) == rownames(MouseBalanceTimeSeries)
 
 MouseBalanceTimeSeries
 
@@ -164,7 +183,7 @@ MouseBalanceTimeSeries
 ##Let's compare row means (within-mouse). We can do this using apply():
 ##The margin argument sets whether we apply the function to rows (1) or columns(2).
 
-apply(MouseBalanceTimeSeries[1:4,], MARGIN=1, mean)
+apply(X=MouseBalanceTimeSeries[1:4,], MARGIN=1, FUN=mean)
 
 ####QUESTION 4-2: What is the output of the above command? Is it a matrix or a vector?
 
@@ -180,8 +199,10 @@ apply(MouseBalanceTimeSeries[1:4,], MARGIN=1, mean)
 
 ##na.omit() works with data.frames and matrices, and will eliminate rows 
 ##where values are missing.  Sometimes this is what you want, sometimes it 
-##isn't.  Another method that may be useful is interpolation of missing values
-##(for time series data)
+##isn't.  Many times, your dataset is going to have a small number of subjects
+##and it may be possible to achieve your objective with missing data. Another 
+##method that may be useful is interpolation of missing values
+##(i.e., for time series data).
 
 MBTSfiltered <- na.omit(MouseBalanceTimeSeries)
 
@@ -193,7 +214,7 @@ attributes(MBTSfiltered)$na.action
 ##tapply() is for when you have a vector for grouping (such as a factor)
 ##and you want to apply a function to each group
 ##Here we take the mean weight by Strain
-tapply(MouseFrame$Weight, MouseFrame$Strain, mean)
+tapply(X=MouseFrame$Weight, INDEX=MouseFrame$Strain, FUN=mean)
 
 ####QUESTION 4-4: Use tapply to compute the first (pre) and fourth (post) column means
 ####by Strain (remember, the identifiers are identical in both MouseFrame and 
@@ -207,12 +228,19 @@ tapply(MouseFrame$Weight, MouseFrame$Strain, mean)
 ##apply methods is Hadley Wickham's plyr package. It is a bit quirky, but provides 
 ##efficient ways to apply functions across a variety of data structures.
 
+##sapply() and lapply() are both methods to work on list-like objects (such as vectors
+##and lists).  lapply() works strictly on lists of objects, which we'll talk about in
+##the next section.  sapply() is much more flexible in terms of output.
+
+##mapply() is used when you have a function that takes multiple arguments.
+
 ########################################################
 ##Part 5: Lists, Batch processing, and Storing Results
 ########################################################
 ##Lists are a general data structure. Each slot can be named and can hold any R
 ##Object.  
-testList <- list(a=c(1,4,5), b=data(iris), c="STRING")
+data(iris)
+testList <- list(a=c(1,4,5), b=iris, c="STRING")
 
 ##accessing the actual element of the list can be done by name or by number
 ##note the use of double brackets [[]] to access the element
@@ -231,15 +259,14 @@ testList[["d"]] <- "ANOTHER STRING"
 ##think about this is that the double brackets are accessing the object, and
 ##then we can subset within the object.
 
-####QUESTION 5-1: Guess what subset each of the following statements accesses
+####QUESTION 5-1: Guess what each of the following statements accesses
 ####from testList.
 ####Was your guess correct?
 
 testList[[1]][2]
 testList[["b"]][1:5,]
-testList$c[1]
-dd <- "a"
-testList[[dd]]
+testList$c
+dd <- "a"; testList[[dd]]
 
 ##note that when accessing the double brackets, the difference between "a"
 ##(a string) and dd (a variable which has "a" stored in it).

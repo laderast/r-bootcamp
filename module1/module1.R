@@ -21,6 +21,16 @@ help()
 ##Much of this bootcamp is derived from An Introduction to R
 ##http://cran.r-project.org/doc/manuals/R-intro.pdf
 
+##These two texts will be more useful further on, but are good reads.
+##Introductory Statistics Using R: The first 53 pages are a helpful
+##reference to those who are getting started.
+##(A PDF can be found if you look around)
+##http://www.springer.com/mathematics/probability/book/978-0-387-79053-4
+
+##R-Cookbook. This is a recipe-driven approach to learning code.  This will
+##be useful once you learn the basics.
+##http://www.amazon.com/Cookbook-OReilly-Cookbooks-Paul-Teetor/dp/0596809158
+
 
 ##############################
 ###Part 0: Getting started
@@ -44,8 +54,13 @@ setwd("c:/")
 ##for linux/mac os x buffs
 setwd("~/Desktop")
 
-##set your working directory to where the "module1.RData" object is
+##Set your working directory to the folder that contains the "module1.RData" file.
 
+
+##In terms of best practices and reproducbility, it's best to not change
+##directories in the middle of a script (as the script can break when it's
+##run in a different system), so try and keep data files and associated scripts
+##in the same directory.
 
 ##loading a workspace
 ##You can also load workspaces via "Load Workspace" under the File menu
@@ -61,16 +76,22 @@ ls(pattern="iris")
 class(iris)
 
 ##removing objects
+testObject
 rm(testObject)
 
 ##can remove everything in the workspace by using this command
 ##obviously don't run this right now
-rm(list=ls())
+#rm(list=ls())
 
 ####QUESTION 0-1: how does this work? Read the help file for 
 ####?rm
 
+##Saving a workspace.
+##if you're in the middle of something, but need to quit, you can use save.image()
+##to save your progress in the workspace.  Then you can use load() to load up your
 
+save.image("module1-modified.RData")
+load("module1-modified.RData")
 
 ############################
 ###Part 1: Loading Data
@@ -83,10 +104,26 @@ rm(list=ls())
 ##note the "<-" operator assigns the output to an object
 mouseData <- read.table(file = "mouseData.txt", header=TRUE, sep="\t")
 
+##for the most part, the "=" operator is equivalent. However, I tend to use
+##"<-" because it I do not confuse assignment with the comparison operator "==".
+mouseData = read.table(file = "mouseData.txt", header=TRUE, sep="\t")
+
+##one difference between "<-" and "=" is that there is an equivalent operator
+##"->" if you wanted to do left to right assignment.
+##The following two assignments are equal (check the values of y and y2)
+y <- 10
+10 -> y2
+
+##The following are NOT equal (see what happens, and see whether x and x2 are
+##assigned a value):
+5 -> x
+5 = x2
+
+
 ##A note on function arguments.  Note that if you read the help file,
-##there is an intrinsic order to arguments (which you can see from the help file. 
-##So you can invoke read.table nlike this and it will be equivalent to the 
-##above command
+##there is an intrinsic order to arguments (which you can see from the help file.) 
+##So you can invoke read.table like this and it will be equivalent to the 
+##above command.
 
 mouseData <- read.table("mouseData.txt", TRUE, "\t")
 
@@ -95,6 +132,10 @@ mouseData <- read.table("mouseData.txt", TRUE, "\t")
 
 mouseData <- read.table(header=TRUE, sep="\t", file = "mouseData.txt")
 
+##when you are starting out, I suggest you name your arguments until you memorize
+##the argument order.  Even when I know the argument order, I usually name my
+##arguments to make the code easier to read.
+
 ##also note that most arguments have a default setting and if you don't need to 
 ##deviate from the default, you don't need to invoke them.
 
@@ -102,15 +143,16 @@ mouseData <- read.table(header=TRUE, sep="\t", file = "mouseData.txt")
 ##relative or absolute path:
 ##
 
-mouseData <- read.table("../mouseData.txt")
+mouseData <- read.table("../module1/mouseData.txt")
 
 ##an alternative way to read in the table is read.delim(), which assumes
 ##input format is a tab-delimited file with a header.
 
 mouseData <- read.delim("mouseData.txt")
 
-##mouseData is what's called a data frame. We'll learn more about data frames
-##in the next module.
+##mouseData is a data frame. We'll learn more about data frames in the next module.
+##for now, note that the following is true:
+class(iris) == class(mouseData)
 
 ##Loading Excel Files
 ##In general, it's easiest to use "Save As" to save individual sheets to tab
@@ -119,8 +161,7 @@ mouseData <- read.delim("mouseData.txt")
 ##Another trick is to copy the data from the excel sheet to the clipboard 
 ##and use read.table("clipboard") . However, this limits the reproducibility 
 ##of the workflow, so it's usually not recommended.
-
-excelData <- read.table("clipboard", sep="\t", header=TRUE)
+#excelData <- read.table("clipboard", sep="\t", header=TRUE)
 
 ##there is also the ability to load data using the RODBC and gdata packages.
 
@@ -139,16 +180,17 @@ mouseData[1:5,]
 ####QUESTION 1-2: What happens when you start at 0, such as mouseData[0:5,] what does
 ####this tell you about how mouseData is indexed?
 
-##Part 2: Exploring the Dataset and QC/QA
 ##Let's run some simple descriptive statistics on the mouseData.
 summary(mouseData)
 
 ####QUESTION 2-1: What is the mean weight for the mice?
 ####QUESTION 2-2: How many B6 mice are there? How many D2 mice?
 
+##we can also see how many rows and how many columns the data has using dim()
+dim(mouseData)
+
 ##One simple method for understanding the structure of our data frame is
 ##to access the column names of the data frame
-
 colnames(mouseData)
 
 ##we can also directly access columns of the data frame for visualization
@@ -156,7 +198,7 @@ colnames(mouseData)
 
 mouseData$Weight
 
-##we can visualize the numerical portion of MouseFrame (the weights) using
+##we can visualize the numerical portion of MouseData (the weights) using
 ##two functions: hist() (histogram) and boxplot()
 
 hist(mouseData$Weight, main = "Distribution of Mouse Weights")
@@ -169,12 +211,12 @@ boxplot(mouseData$Weight, main = "Boxplot of Mouse Weights")
 ##note that for pdf(), height and width are specified in inches.  pdf() gives the
 ##most professional looking results for simple files.
 ##dev.off() closes the device and writes the file
-pdf(file="mouse-histogram.pdf", height=5, width=5)
+pdf(file="mouseData-histogram.pdf", height=5, width=5)
 hist(mouseData$Weight, main = "Distribution of Mouse Weights")
 dev.off()
 
 ##note for png(), height and width are specified in pixels.  
-png("mouse-boxplot.png", height=500, width=500)
+png("mouseData-boxplot.png", height=500, width=500)
 boxplot(mouseData$Weight, main = "Boxplot of Mouse Weights")
 dev.off()
 
@@ -211,7 +253,10 @@ write.table(mouseData, file="mouseData2.csv", sep=",", row.names=FALSE)
 ##Let's run a script - what does it output?
 source("testScript.R")
 
+####QUESTION 3-1: There is a mistake in the script. What is it? Use the Error
+####to figure out what is wrong.  Fix it, and run it.
 ####QUESTION 3-1: Modify the Script to produce a png file instead of a pdf file.
+####Confirm the script produces the correct output by running it.
 
 ###***FINAL PROBLEM: Fill out the included "module1-final-problem.R" file 
 ###***to do the following:

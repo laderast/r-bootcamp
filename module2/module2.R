@@ -3,9 +3,11 @@
 ###Module 2: Vectors, Data Frames, Subsetting, Filtering, and Ordering
 ####################################################################
 
+##Before you start: remember to set your working directory to the 
+##module2 folder!
 
 ###load up the workspace
-load("Module2.RData")
+load("module2.RData")
 
 #########################
 ###Part 1: Vectors
@@ -42,6 +44,9 @@ b
 ###try to do it (R is optimized for this)
 ###run the mean on a vector
 meanWeight <- mean(weights)
+
+###Missing numeric values tend to be coded as NAs. Not all functions will
+###handle NAs the same. In module 3, we will talk about the na.omit() function.
 
 #vector operations
 #some operations output a vector of the same length
@@ -83,7 +88,7 @@ c("This is character data", 1:5)
 
 ####QUESTION 1-6: how might you combine c() and a series of names to
 ####pull out only the "M1", "M5", and "M10" weights?
-####this operation is called subsetting, and we'll cover it more 
+####this is another kind of subsetting operation, and we'll cover it more 
 ####in detail later.
 
 
@@ -127,6 +132,7 @@ as.character(c(1,2,3,5))
 testVecFac <- factor(c("D", "D", "E"), levels=c("D", "E"))
 
 
+
 ##character and factor vectors are for the most part interchangable for tables
 testVecChar <- c("A", "B", "C","C", "D")
 testVecFac <- factor(c("A", "B", "C","C", "D"))
@@ -145,7 +151,19 @@ as.numeric(as.character(testVecFac))
 ##A final note: you may notice that read.table() will treat any strings as factors
 ##when loading. You can override this behavior by setting the argument stringsAsFactors
 ##to FALSE (refer to ?read.table for more information.)
-testTable <- read.table("mouseData.txt", stringsAsFactors=FALSE)
+##whether you will want your strings represented as characters or factors is dependent
+##on the application.  
+
+testTable <- read.table("mouseData.txt", header=TRUE)
+summary(testTable)
+##you can always cast a factor as a string, remember
+testTable$Strain <- as.character(testTable$Strain)
+summary(testTable)
+
+##let's try to read the table as characters
+testTable2 <- read.table("mouseData.txt", stringsAsFactors=FALSE, header=TRUE)
+##note the numeric property of Weight is preserved
+summary(testTable2)
 
 
 #################################
@@ -176,7 +194,11 @@ MouseFrame[1:5,]
 ##column names (usually corresponds to variables):
 colnames(MouseFrame)
 
-##row names (usually subjects or genes)
+##row names (usually subjects (such as patients) or gene names)
+##one requirement of rownames is that each row name is unique
+##so that subsetting by name will return a unique result. Patients
+##and genes tend to have a unique identifier that we can use. In
+##this case, the unique identifier is the MouseID
 rownames(MouseFrame)
 
 ##access only the Weights column of MouseFrame
@@ -202,6 +224,9 @@ dF <- data.frame(nameVec, massVec,factorVec)
 ##note that column names are derived from the original vector names
 ##however, using assignment, you can change the column names when you 
 ##initialize them.
+##in terms of reproducibility, try to make a new copy of a data frame
+##whenever you manipulate the contents.  This leaves a clear audit trail
+##in your script.
 
 dF2 <- data.frame(idVec=nameVec, mass=massVec,class=factorVec)
 
@@ -226,7 +251,7 @@ mass
 ##otherwise things get confusing, especially when you have data frames
 ##with identical column names.
 
-detach(df3)
+detach(dF3)
 
 
 #######################################################
@@ -241,9 +266,15 @@ MouseFrame[1:5,]
 ##the Strain and Weight Columns
 MouseFrame[1:5,c("Strain","Weight")]
 
+##if we don't want a column or row, we can remove it by using the "-" operator.
+##note that this doesn't work for any index vectors except the numerical index.
+##I tend not to use this and instead will use a colnames or rownames subset as above.
+MouseFrame[-c(1:3), -1]
+
 ##another way of subsetting is by using a boolean vector, which seems kind of dumb,
 ##until you realize that you can generate this boolean vector using other methods.
-##(see Part 4)
+##(see Part 4).  In general, we are trying to avoid hardcoding values, and subsetting
+##on specific criteria makes our code more generalizable.
 
 MouseFrame[,c(TRUE,TRUE,FALSE)]
 
@@ -283,27 +314,37 @@ MouseFrame$Gender == "F"
 ####QUESTION 4-3: how do you select females of strain D2?
 #Hint: it's ok to use more than one operation
 #Hint: you can also chain selections using the & (and) or the | (or) operators
-
+#Hint: don't forget the comma!
 
 ####QUESTION 4-4: How would we select those mice with a weight
 #less than 50 grams?
 
 ##chaining subsetting and filtering operations
-##because they are essentially the same thing, you can use a combination of
-##subsetting or filtering operators to produce a reduced dataset
+##the difference between subsetting and filtering is largely semantic, but you
+##can think of filtering as part of subsetting operations using some sort of
+##conditional operators.
+
+##because they are essentially producing the same thing (boolean vectors), you can 
+##use a combination of subsetting or filtering operators to produce a reduced dataset
 
 MouseFrame[MouseFrame$Strain == "B6", c("Strain","Weight")]
 
 ##many statistical methods may require you to recode a group
-##ifelse() works very well for this when you have two groups
+##ifelse() works very well for this when you have two groups. 
+##ifelse() takes a test condition, such as a filtering operation, and
+##will produce a code (in this case 1) if the condition is true and another
+##code (in this case 0) if the condition is false.
 
-lowWeight <- ifelse(MouseFrame$Weight < 45, 1, 0)
+lowWeight <- ifelse(test = MouseFrame$Weight < 45, yes = 1, no = 0)
 
+####QUESTION 4-5: produce a cross table between MouseFrame$Strain and lowWeight
+####(you may need to cast lowWeight as a factor).  Do Weight and Strain appear to
+####be associated?
 
 ##############################
 #Part 5: Sampling and ordering
 ##############################
-###Both sampling and ordering can be thought of as subsetting operations
+###Both sampling and ordering can be thought of as subsetting operations as well.
 ###Let's sort MouseFrame by Weight
 
 ####QUESTION 5-1: what does order() do? How can you use it to sort a data frame?

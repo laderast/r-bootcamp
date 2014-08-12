@@ -15,8 +15,3 @@ for(mm in mouseExps){
 ###***Do you notice anything about the data? What would be one way to deal with
 ###***the issues in the data?
 
-for(mm in mouseExps){
-  mdata <- mouseExpList[[mm]]
-  rowSum <- apply(mdata,1,sum)
-  mouseExpList[[mm]] <- data.frame(mdata, rowSum)
-}

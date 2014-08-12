@@ -3,6 +3,8 @@
 ###Module 4: Merging, Visualizing, Functions
 ##############################################################
 
+##remember: change your working directory.
+
 ##load the module up
 load("module4.RData")
 ##look around
@@ -140,9 +142,9 @@ sqrFun <- function(x) {
 
 meanSdFun <- function(vec){
   #test to see if input is a vector and at least length 3
-  if(is.numeric(x) && length(x) > 2){
-      meanRes <- mean(x)
-      sdRes <- sd(x)
+  if(is.numeric(vec) && length(vec) > 2){
+      meanRes <- mean(vec)
+      sdRes <- sd(vec)
       #store the results in a list
       resList <- list(mean=meanRes, sd=sdRes)
       #return results
