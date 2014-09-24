@@ -6,7 +6,7 @@
 ##remember to change your working directory!
 
 ###Load up the module workspace
-load("Module3.RData")
+load("module3.RData")
 
 #################################
 ###Part 1: Iterating

@@ -305,10 +305,8 @@ weights[weights < 50]
 MouseFrame[MouseFrame$Gender == "F",]
 
 ####QUESTION 4-2: What does 
-
-MouseFrame$Gender == "F" 
-
-#do?  Why does it select the correct cases?
+####MouseFrame$Gender == "F" 
+####do?  Why does it select the correct cases?
 
 
 ####QUESTION 4-3: how do you select females of strain D2?
@@ -317,7 +315,7 @@ MouseFrame$Gender == "F"
 #Hint: don't forget the comma!
 
 ####QUESTION 4-4: How would we select those mice with a weight
-#less than 50 grams?
+####less than 50 grams?
 
 ##chaining subsetting and filtering operations
 ##the difference between subsetting and filtering is largely semantic, but you
@@ -359,11 +357,11 @@ order(MouseFrame$Weight, MouseFrame$Gender)
 #Let's produce bootstrap samples of our dataframe
 
 ####QUESTION 5-3: What does the sample() code below do?  How
-#can we use it to produce samples of our dataframe?
+#####can we use it to produce samples of our dataframe?
 sample(1:nrow(MouseFrame), 5, replace=TRUE)
 
 ####QUESTION 5-4: Produce a bootstrap sample without replacement of 7 rows
-#of MouseFrame. Confirm that you have sampled unique rows in your dataframe.
+####of MouseFrame. Confirm that you have sampled unique rows in your dataframe.
 
 
 ###***FINAL PROBLEM: Load the iris dataset using data(iris). (this will load the data

@@ -3,7 +3,6 @@
 ###***Assume x is a vector and has NAs. Write the function such that it eliminates NAs
 ###***and returns the mean of the remaining values in the vector. If the length of 
 ###***remaining values is 0, have the function return NA.
-
 ###***Use this function to revise your rowMeans for each data.frame in mouseExpList 
 ###***(provided as an data object in module4). 
 ###***Write another function with the following signature:
