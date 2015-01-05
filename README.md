@@ -1,6 +1,8 @@
 r-bootcamp
 ==========
 
+[![DOI](https://zenodo.org/badge/8706/laderast/r-bootcamp.svg)](http://dx.doi.org/10.5281/zenodo.13756)
+
 Draft Tutorial for self directed bootcamp for learning R-programming basics.
 
 Each folder contains a different module.  Each folder contains a file, ex. "module1.R" 
