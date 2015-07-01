@@ -110,7 +110,6 @@ nrow(resIterateFrame)
 ##Similarly, we can filter our results using the WHERE statements. Note how similar this
 ##is to filtering a data frame. You can use all your data frame skills here!
 SQLquery2 <- "SELECT * from Mouse WHERE StrainID = 'B6'"
-SQLquery2 <- "SELECT * from Mouse"
 
 SQLresult2 <- dbSendQuery(conn=dbConn,statement = SQLquery2)
 mouseQuery <- fetch(SQLresult2, n=-1)

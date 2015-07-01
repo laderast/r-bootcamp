@@ -27,7 +27,7 @@ dev.off()
 ####(take out the "species" variable.)
 ####What does this plot do? Why is it useful?
 
-#Answer: Pairs essentially does xy plots of each variable with each other. It's really useful
+#Answer: pairs() essentially does xy plots of each variable with each other. It's really useful
 #for visualizing whether variables are correlated with each other.
 pairs(iris[,1:4])
 
@@ -44,9 +44,9 @@ sqrFun("STRING") #Answer: Error! It makes no sense to do math operations on a st
 #Answer:
 sqrFun <- function(x) {
   if(length(x)==1 & is.numeric(x)){
-  sqrVal <- x^2
-  #return the value
-  sqrVal
+    sqrVal <- x^2
+    #return the value
+    sqrVal
   }
   else{print("Error: input is not a single numeric value")}
 }

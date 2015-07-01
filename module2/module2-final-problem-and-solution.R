@@ -14,4 +14,4 @@ nrow(setosaFrame[setosaFrame$Petal.Length < 3.5,]) #50 samples
 
 ###***How many virginica samples have a Petal Width less than 2.0?
 
-nrow(virginicaFrame[virginicaFrame$Petal.Width < 2.0,]) #50 samples
+nrow(virginicaFrame[virginicaFrame$Petal.Width < 2.0,]) #21 samples
