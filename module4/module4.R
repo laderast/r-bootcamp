@@ -218,6 +218,11 @@ testFun2(50)
 ##into functions. It's easy to prototype code that accidentally depends on global 
 ##variables that are not explicitly passed into the function. 
 
+#Have you wondered what the hell the "..." is in function descriptions? Basically when 
+#a function has "...", it means you can pass it additional arguments to internal functions
+#This is really useful when using things like apply and you have a function that requires
+#additional arguments.
+
 ###***FINAL PROBLEM: Write a function with the following signature:
 ###***meanWithNA <- function(x)
 ###***Assume x is a vector and has NAs. Write the function such that it eliminates NAs

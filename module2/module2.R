@@ -363,6 +363,7 @@ sample(1:nrow(MouseFrame), 5, replace=TRUE)
 ####QUESTION 5-4: Produce a bootstrap sample without replacement of 7 rows
 ####of MouseFrame. Confirm that you have sampled unique rows in your dataframe.
 
+###A note about make.names()
 
 ###***FINAL PROBLEM: Load the iris dataset using data(iris). (this will load the data
 ###***as the iris object).  

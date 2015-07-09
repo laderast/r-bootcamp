@@ -1,0 +1,138 @@
+---
+title: 'Module 6: Advanced Topics'
+author: "Ted Laderas"
+date: "July 9, 2015"
+output: html_document
+---
+
+##Let's Get Advanced
+
+This module covers the following advanced topics in R.
+
+  1. The magic of lapply() and other apply functions
+  2. The dplyr package
+  3. The reshape2 package
+  4. The devtools package
+  5. Installing packages in a shared environment
+
+##Part 0: Required Packages
+
+You will need the following packages to run this module:
+
+```{r}
+require(dplyr)
+require(reshape2)
+require(parallel)
+require(devtools)
+```
+
+##Part 1: The Magic of lapply() and mclapply()
+
+We've already seen that apply() can apply a function over rows and columns of a matrix. lapply() is a much more general method that operates on lists. Usually each object in the list is in an identical format.
+
+```{r}
+#Two ways of iterating over a list
+data(iris)
+
+#initialize a list with three sampled versions of iris
+testList <- list(one=iris[sample(rownames(iris),30),], two=iris[sample(rownames(iris),30),], three=iris[sample(rownames(iris),30),])
+
+#let's look at the head of each of these samples
+#the for loop way
+for(tt in testList){
+  print(head(tt))
+}
+
+#the lapply way
+lapply(testList, head)
+```
+
+We can design a function that essentially does everything we need to do in a for loop. Note that we are taking advantage of the "..." argument to pass the cutoff argument from lapply() to the filterFrame function.
+
+```{r}
+filterFrame <- function(testFrame, cutoff){
+    #filter Sepal.Width by cutoff value
+    outFrame <- testFrame[testFrame$Sepal.Width > cutoff,]
+    #return mean of each column
+    return(colSums(outFrame[,1:4])/nrow(outFrame))
+  }
+
+testRes <- lapply(testList, filterFrame, cutoff=3.0)
+testRes
+```
+
+We can do lapply() operations on a single data frame or matrix by operating on the column names or the row names:
+
+```{r}
+
+```
+
+Similarly, if we have two or more lists that have identical names, we can do operations on both of them by operating on the list names rather than the lists themselves.
+
+```{r}
+
+```
+
+By now, you should see that most everything you do in a for loop, you can do with an lapply call.
+
+```{r}
+
+```
+
+Once we have operated on these, our results are returned in a list. If the result is a single scalar, we can use unlist() to return results as a vector.
+
+```{r}
+
+```
+
+Another operation that is really useful on list results is do.call(). For example, if do.call returns a row vector, we can bind our results into a matrix by using do.call("rbind", listRes)
+
+```{r}
+testMat <- do.call("rbind", testRes)
+testMat
+```
+
+Why do we care about this? The first reason is that lapply() is inherently faster than for loops in general. However, the other reason is clarity. By writing a function, it is clear what we are doing over the list compared to a for loop. Much of the overhead of writing the for loop (incrementing counters, etc) is also simplified when we use lapply().
+
+Another reason is a related function known as mclapply(), which lets us spread the work over multiple cores. Once you have an lapply statement, it is easy to convert it into an mclapply statement.
+
+```{r}
+library(parallel)
+outResult <- mclapply(testList, filterFrame, mc.cores=2)
+```
+
+###Resources
+
+For much more information about lapply and other functionals, check out this Hadley Wickham page: [http://adv-r.had.co.nz/Functionals.html](http://adv-r.had.co.nz/Functionals.html).
+
+
+
+##Part 2: The dplyr package
+
+In module 2, we learned the basics of indexing and subsetting in R. Now let's examine another way to do it with the dplyr package. If you are familiar with Unix, you may know that you can build workflows with the "|" (pipe command), taking the output of one command and routing (or piping) it into the input of another command. 
+
+The dplyr package takes advantage of something similar, which is the magrittr pipe "%>%" to pipe the output of one function into another. 
+
+We use the "%>%" to pipe a data.frame from one dplyr operation to another. These operations are known as select(), mutate(), transmute(), summarize(), group_by(), count(), and collapse() 
+
+The advantages to dplyr code is that it is fast and much easier to understand than standard subsetting operations, especially with lots of boolean operations. Additionally, our source data doesn't need to be a data.frame that's in memory; it can be the result of a database call, which
+
+```{r}
+```
+
+##Part 3: The reshape package
+
+Data transformation is a necessary pain. We've already seen ways to subset data, but what about formats that are friendly to packages such as ggplot2 and ggvis? These packages require tidy data, where each row in the table corresponds to a data point. If we have data in an expression matrix, it's necessary to transform the matrix into a tidy one.  
+
+```{r}
+
+```
+
+##Part 4: The devtools package
+
+The devtools package lets you do a number of useful things. The first is being able to install packages directly from GitHub. This is really useful when you need the bleeding-edge latest release of a package.
+
+```{r}
+install_github("laderast/Consense")
+```
+
