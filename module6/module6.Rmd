@@ -38,7 +38,7 @@ data(iris)
 testList <- list(one=iris[sample(rownames(iris),30),], two=iris[sample(rownames(iris),30),], three=iris[sample(rownames(iris),30),])
 
 #let's look at the head of each of these samples
-#the for loop way
+#This is the for loop way
 for(tt in testList){
   print(head(tt))
 }
@@ -46,6 +46,8 @@ for(tt in testList){
 #the lapply way
 lapply(testList, head)
 ```
+
+**QUESTION 1-1**: What data structure does lapply return?
 
 We can design a function that essentially does everything we need to do in a for loop. Note that we are taking advantage of the "..." argument to pass the cutoff argument from lapply() to the filterFrame function.
 
@@ -61,6 +63,33 @@ testRes <- lapply(testList, filterFrame, cutoff=3.0)
 testRes
 ```
 
+Here's another example where we count and report the species with the largest number in each sampled frame in the list.
+
+```{r}
+countLargestSpecies<- function(testFrame){
+  #count how many of each species exists in the data frame
+  tab <- table(testFrame$Species)
+  #find maximum number
+  maxT <- max(tab)
+  #return the species with the largest number in the table
+  return(tab[tab == maxT])
+}
+
+lapply(testList, countLargestSpecies)
+```
+
+Another way to invoke lapply() is to use an anonymous function. An anonymous function is just an unnamed function that we supply to lapply whose first argument corresponds to the list element we are working on. So, we could do something identical to the previous code block as follows.
+
+I try not to do this if the function is more than 2 or 3 lines, because it's not very readable. But I'm showing it to you just in case you come across it in R-code so you will not be confused.
+
+```{r}
+lapply(testList, function(testFrame){tab <- table(testFrame$Species)
+                                     maxT <- max(tab)
+                                     return(tab[tab == maxT])
+                                     }
+       )
+```
+
 We can do lapply() operations on a single data frame or matrix by operating on the column names or the row names:
 
 ```{r}
@@ -73,7 +102,7 @@ Similarly, if we have two or more lists that have identical names, we can do ope
 
 ```
 
-By now, you should see that most everything you do in a for loop, you can do with an lapply call.
+By now, you should see that most everything you do in a for loop, you can do with an lapply() call.
 
 ```{r}
 
@@ -117,12 +146,16 @@ We use the "%>%" to pipe a data.frame from one dplyr operation to another. These
 
 The advantages to dplyr code is that it is fast and much easier to understand than standard subsetting operations, especially with lots of boolean operations. Additionally, our source data doesn't need to be a data.frame that's in memory; it can be the result of a database call, which
 
+###data.table versus data.frame
+
 ```{r}
 ```
 
-##Part 3: The reshape package
+##Part 3: The reshape2 package
 
-Data transformation is a necessary pain. We've already seen ways to subset data, but what about formats that are friendly to packages such as ggplot2 and ggvis? These packages require tidy data, where each row in the table corresponds to a data point. If we have data in an expression matrix, it's necessary to transform the matrix into a tidy one.  
+Data transformation is a necessary pain. We've already seen ways to subset and transform data using dplyr, but what about formats that are friendly to packages such as ggplot2 and ggvis? These packages require tidy data, where each row in the table corresponds to a data point. If we have data in an expression matrix (where each column are the results of a different sample), it's necessary to transform the matrix into a tidy one, where each row corresponds to a single entry in the expression matrix.
+
+This is what the reshape2 package is all about. The main functions in reshape2 are melt and the various cast functions.
 
 ```{r}
 

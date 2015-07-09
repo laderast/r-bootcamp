@@ -190,6 +190,9 @@ dim(MouseFrame)
 ##useful for checking that you read in data properly
 MouseFrame[1:5,]
 
+##QUESTION: note that the column of each data frame is pretty much a vector, but a
+##row is actually a list. Why is that?
+
 ##data frames have two kinds of names associated with them:
 ##column names (usually corresponds to variables):
 colnames(MouseFrame)
