@@ -1,47 +1,86 @@
-#####################################################################
-###R Bootcamp for Programming
-###Module 2: Vectors, Data Frames, Subsetting, Filtering, and Ordering
-####################################################################
+---
+title: "Module 2: Vectors, Data Frames, Subsetting, Filtering, and Ordering"
+author: "Ted Laderas"
+date: "July 9, 2015"
+output: html_document
+---
 
-##Before you start: remember to set your working directory to the 
-##module2 folder!
+#R Bootcamp for Programming
+##Module 2: Vectors, Data Frames, Subsetting, Filtering, and Ordering
 
-###load up the workspace
+Before you start: remember to set your working directory to the module2 folder!
+
+Now, let's load up the workspace:
+```{r}
 load("module2.RData")
+```
 
-#########################
-###Part 1: Vectors
-#########################
-###let's look at a vector in the workspace
+##Part 1: Vectors
+
+Let's look at a vector in the workspace.
+
+```{r}
 weights
+```
 
-###each slot in a vector can have a unique name
+Note that each slot in a vector can have a unique name
+
+```{r}
 names(weights)
+```
 
+One of the properties a vector has is length.
+
+```{r}
 ###a vector has a length
 length(weights)
+```
 
-###weights can be subsetted
-###get the very first weight
+The weights vector can be subsetted. Let's get the very first weight.
+
+```{r}
 weights[1]
+```
+
+If we pass a sequence to the vector, we can subset. Here we want to grab the first 5 weights, so we pass a sequence from 1 to 5.
+
+```{r}
+#a sequence is actually a vector
+1:5
 
 ###get the first 5 weights
 weights[1:5]
+```
 
-###values can also be retrieved by name
+Values in a vector can also be retrieved by name:
+
+```{r}
 weights["M15"]
+```
 
-####QUESTION 1-1: How would we get the last 5 weights?
-####QUESTION 1-2: How would we get the first 5 weights in reverse order?
+**QUESTION 1-1**: How would we get the last 5 weights?
+```{r}
+#space for your answer here
+```
 
-###assignment
-###in general, assignment is done by using the <- operator
+**QUESTION 1-2**: How would we get the first 5 weights in reverse order?
+```{r}
+#space for your answer here
+```
+
+###Assignment in Vectors
+
+In general, assignment is done by using the <- operator. Here we assign the first 5 elements of the weights vector to b.
+
+```{r}
 b <- weights[1:5]
 b
+```
 
-###operations on vectors
-###in general, if you can do an operation on a vector all at once,
-###try to do it (R is optimized for this)
+###Operations on Vectors
+
+In general, if you can do an operation on a vector all at once, try to do it (as R is optimized for this).
+
 ###run the mean on a vector
 meanWeight <- mean(weights)
 
@@ -56,8 +95,17 @@ resids <- weights - meanWeight
 ####QUESTION 1-3: what happened here? Why can we subtract a scalar
 ####from a vector?
 
+```{r}
+#space for your answer here
+```
+
 ####QUESTION 1-4: what happens when you try to subtract two vectors of unequal lengths?
 weights[1:5] - weights[1:2]
+```{r}
+#space for your answer here
+```
+
+
 
 ##Another example of a vector operation
 ##look at resids
@@ -82,14 +130,20 @@ vec2
 
 ####QUESTION 1-5: what happens when you try to mix characters and
 ####numbers?  What does this tell you about vectors?
+```{r}
+#space for your answer here
+```
 
 c("This is character data", 1:5)
-
 
 ####QUESTION 1-6: how might you combine c() and a series of names to
 ####pull out only the "M1", "M5", and "M10" weights?
 ####this is another kind of subsetting operation, and we'll cover it more 
 ####in detail later.
+
+```{r}
+#space for your answer here
+```
 
 
 #descriptive statistics and exploratory data analysis
@@ -102,6 +156,10 @@ hist(weights)
 
 ####QUESTION 1-7: What can you say about the distribution of weights?
 ####i.e., are they distributed normally?
+
+```{r}
+#space for your answer here
+```
 
 
 ##vector datatypes and casting
@@ -192,6 +250,11 @@ MouseFrame[1:5,]
 
 ##QUESTION: note that the column of each data frame is pretty much a vector, but a
 ##row is actually a list. Why is that?
+
+```{r}
+#space for your answer here
+```
+
 
 ##data frames have two kinds of names associated with them:
 ##column names (usually corresponds to variables):
@@ -284,7 +347,17 @@ MouseFrame[,c(TRUE,TRUE,FALSE)]
 ####QUESTION 3-1: what happens when you use a boolean vector that's shorter than the number
 ####of columns? What happens with the remaining columns?  Are they returned?
 
+```{r}
+#space for your answer here
+```
+
+
 ####QUESTION 3-2: How would we select every third row? Hint: help("%%")
+
+```{r}
+#space for your answer here
+```
+
 
 #######################################################
 ##Part 4: Filtering
@@ -311,14 +384,26 @@ MouseFrame[MouseFrame$Gender == "F",]
 ####MouseFrame$Gender == "F" 
 ####do?  Why does it select the correct cases?
 
+```{r}
+#space for your answer here
+```
 
 ####QUESTION 4-3: how do you select females of strain D2?
 #Hint: it's ok to use more than one operation
 #Hint: you can also chain selections using the & (and) or the | (or) operators
 #Hint: don't forget the comma!
 
+```{r}
+#space for your answer here
+```
+
 ####QUESTION 4-4: How would we select those mice with a weight
 ####less than 50 grams?
+
+```{r}
+#space for your answer here
+```
+
 
 ##chaining subsetting and filtering operations
 ##the difference between subsetting and filtering is largely semantic, but you
@@ -342,6 +427,10 @@ lowWeight <- ifelse(test = MouseFrame$Weight < 45, yes = 1, no = 0)
 ####(you may need to cast lowWeight as a factor).  Do Weight and Strain appear to
 ####be associated?
 
+```{r}
+#space for your answer here
+```
+
 ##############################
 #Part 5: Sampling and ordering
 ##############################
@@ -351,10 +440,19 @@ lowWeight <- ifelse(test = MouseFrame$Weight < 45, yes = 1, no = 0)
 ####QUESTION 5-1: what does order() do? How can you use it to sort a data frame?
 order(MouseFrame$Weight, decreasing=TRUE)
 
+```{r}
+#space for your answer here
+```
+
 ###we can also specify sorting by multiple factors
 order(MouseFrame$Weight, MouseFrame$Gender)
 
 ####QUESTION 5-2: How can we sort the data frame by Strain then Weight?
+
+```{r}
+#space for your answer here
+```
+
 
 #Let's produce bootstrap samples of our dataframe
 
@@ -362,8 +460,18 @@ order(MouseFrame$Weight, MouseFrame$Gender)
 #####can we use it to produce samples of our dataframe?
 sample(1:nrow(MouseFrame), 5, replace=TRUE)
 
+```{r}
+#space for your answer here
+```
+
+
 ####QUESTION 5-4: Produce a bootstrap sample without replacement of 7 rows
 ####of MouseFrame. Confirm that you have sampled unique rows in your dataframe.
+
+```{r}
+#space for your answer here
+```
+
 
 ###A note about make.names()
 
