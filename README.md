@@ -18,6 +18,7 @@ The content of each module is as follows:
 5. Databases, Packages, and Beyond.
 
 Each folder contains the following files:
+
 1.  moduleX.R - The script
 2.  moduleX.RData - workspace consisting of data to manipulate
 3.  moduleX-test-your-knowledge.R - Multiple Choice Quiz to test your knowledge

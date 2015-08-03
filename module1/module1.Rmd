@@ -24,7 +24,6 @@ help()
 
 R can be run from the command line, or the R interpreter.  It's probably easiest to run it from an IDE such as RStudio when working through these modules.
 
-###Installing R-studio:
 [http://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf](http://cran.r-project.org/doc/contrib/Torfs+Brauer-Short-R-Intro.pdf)
 
 Much of this bootcamp is derived from An Introduction to R: [http://cran.r-project.org/doc/manuals/R-intro.pdf](http://cran.r-project.org/doc/manuals/R-intro.pdf)
@@ -33,6 +32,13 @@ The following two texts will be more useful further on, but are good reads and r
 *[Introductory Statistics Using R](http://www.springer.com/mathematics/probability/book/978-0-387-79053-4)*: The first 53 pages are a helpful reference to those who are getting started. (A PDF can be found if you look around).
 
 *[R-Cookbook](http://www.amazon.com/Cookbook-OReilly-Cookbooks-Paul-Teetor/dp/0596809158)*. This is a recipe-driven approach to learning code.  This will be useful once you learn the basics.
+
+###Installing RStudio:
+
+As it was mentioned above, it is probably easiest to use an IDE such as RStudio.
+The latest edition of RStudio can be found
+[here](https://www.rstudio.com/products/rstudio/download/). From there you can
+download the appropriate installer for your operating system.
 
 ##Part 0: Getting started
 

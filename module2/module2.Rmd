@@ -81,105 +81,116 @@ b
 
 In general, if you can do an operation on a vector all at once, try to do it (as R is optimized for this).
 
+```{r}
 ###run the mean on a vector
 meanWeight <- mean(weights)
+```
 
-###Missing numeric values tend to be coded as NAs. Not all functions will
-###handle NAs the same. In module 3, we will talk about the na.omit() function.
+Missing numeric values tend to be coded as NAs. Not all functions will handle
+`NA`s the same. In module 3, we will talk about the `na.omit()` function.
 
-#vector operations
-#some operations output a vector of the same length
-#let's get the residual sum of squares
+#### Vector operations
+Some operations output a vector of the same length. Let's get the residual sum
+of squares.
+
+```{r}
 resids <- weights - meanWeight
+```
 
-####QUESTION 1-3: what happened here? Why can we subtract a scalar
-####from a vector?
-
+**QUESTION 1-3**: What happened here? Why can we subtract a scalar from a vector?
 ```{r}
 #space for your answer here
 ```
 
-####QUESTION 1-4: what happens when you try to subtract two vectors of unequal lengths?
-weights[1:5] - weights[1:2]
+**QUESTION 1-4**: What happens when you try to subtract two vectors of unequal
+lengths? I.e. `weights[1:5] - weights[1:2]`
 ```{r}
 #space for your answer here
 ```
 
-
-
-##Another example of a vector operation
+Another example of a vector operation:
+```{r}
 ##look at resids
 resids
+
 ##square the residuals
 sqResids <- resids^2
+
 ##produce residual sum of squares
 sum(sqResids)
+```
 
+#### Making vectors
+In general, you can use the `c()` (concatenate) command to make vectors.
 
-##making vectors
-##in general, you can use the c() (concatenate) command
-##to make vectors
-
+```{r}
 vec <- c(1,2,3:5)
 vec
+```
 
-##you can also concatenate a vector to another vector
+You can also concatenate a vector to another vector.
 
+```{r}
 vec2 <- c(vec,5,5)
 vec2
+```
 
-####QUESTION 1-5: what happens when you try to mix characters and
-####numbers?  What does this tell you about vectors?
+**QUESTION 1-5**: What happens when you try to mix characters and numbers? What
+does this tell you about vectors?  `c("This is character data", 1:5)`
 ```{r}
 #space for your answer here
 ```
 
-c("This is character data", 1:5)
-
-####QUESTION 1-6: how might you combine c() and a series of names to
-####pull out only the "M1", "M5", and "M10" weights?
-####this is another kind of subsetting operation, and we'll cover it more 
-####in detail later.
-
+**QUESTION 1-6**: How might you combine c() and a series of names to pull out
+only the "M1", "M5", and "M10" weights? This is another kind of subsetting
+operation, and we'll cover it more in detail later.
 ```{r}
 #space for your answer here
 ```
 
-
-#descriptive statistics and exploratory data analysis
-#can run on a single vector
+#### Descriptive statistics and exploratory data analysis
+You can run operations on a single vector.
+```{r}
 #show mean and quantiles
 summary(weights)
 
 #show a histogram
 hist(weights)
+```
 
-####QUESTION 1-7: What can you say about the distribution of weights?
-####i.e., are they distributed normally?
-
+**QUESTION 1-7**: What can you say about the distribution of weights? i.e., are
+they distributed normally?
 ```{r}
 #space for your answer here
 ```
 
+#### Vector datatypes and casting
+There are four useful vector datatypes to keep in mind: numeric, character,
+boolean and factor.
 
-##vector datatypes and casting
-##There are four useful vector datatypes to keep in mind: numeric, character, boolean
-##and factor.
+We've already seen numeric vectors:
 
-##we've already seen numeric vectors
+```{r}
 c(1,2,3,5)
+```
 
-##another useful way to initialize a vector is using a sequence
+Another useful way to initialize a vector is using a sequence:
+
+```{r}
 c(1:10)
+```
 
-##boolean vectors are simply TRUE/FALSE
+Boolean vectors are simply TRUE/FALSE:
+```{r}
 c(TRUE,TRUE,TRUE,FALSE)
+```
 
-##to some extent, we can convert between vector types using as.numeric() and 
-##as.character()
+To some extent, we can convert between vector types using `as.numeric()` and
+`as.character()`.
 
+```{r}
 as.character(c(1,2,3,5))
-
+```
 
 ##factor vectors can be ordered (by specifying the level argument) or
 ##unordered (by not specifying the level argument). The ordering impacts
