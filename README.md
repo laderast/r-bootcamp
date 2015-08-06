@@ -5,6 +5,8 @@ r-bootcamp
 
 Draft Tutorial for self directed bootcamp for learning R-programming basics.
 
+Written by Ted Laderas with contributions from: Eric Leung, Aurora Blucher, Tracy Edinger, Dian Chase, Gabrielle Choonoo, Clint Olson
+
 Each folder contains a different module.  Each folder contains a file, ex. "module1.R" 
 that is meant to be loaded as a script into an IDE such as RStudio.  By working through
 the script, basic concepts of R and its data structures are taught.
