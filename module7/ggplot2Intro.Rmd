@@ -1,0 +1,262 @@
+---
+title: "Intro to ggplot2"
+author: "Ted Laderas"
+date: "March 11, 2015"
+output: slidy_presentation
+---
+
+## Intro to Hadleyland
+
+Hadley Wickham started building solutions to specific R problems as part of his dissertation work, expanding to form an empire within R.
+
+- plyr/dplyr (How do I apply functions to different data structures?)
+- reshape2 (How can I change/summarize data from one form to another)
+- ggplot2 (How can I make pretty graphics?)
+- testthat (Unit testing framework for R)
+
+## The Grammar of Graphics
+
+ggplot2 is a graphical plotting package that utilizes a "grammar of graphics":
+
+```{r eval=FALSE, tidy=TRUE}
+ggplot(iris) + geom_point(aes(x=Sepal.Length, y=Sepal.Width)) 
+
+#+ theme_minimal()
+```
+
+* Specify data with ggplot()
+* Specify data representation with geoms (layer) 
+    * (bar, line, scatter, heatmap, etc)
+* Specify data mapping with aes() 
+    * (x, y, Color, Size, fill) 
+* Subset data with facets
+* Change the look around with themes
+* Add other properties (titles, etc)
+
+## Simple Example
+```{r}
+library(ggplot2)
+data(iris)
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length)) + theme_minimal()
+```
+
+## aes() - the Aesthetic Function
+
+aes() lets you map a variable to a visual property of the geom. Aesthetics can include:
+
+- x or y (almost any geom)
+- size
+- color (point or line)
+- shape (point)
+- linetype (line)
+- fill (rect, bar, histogram)
+
+Documentation for aes() is remarkably terrible, as it's different for each geom. Look at the documentation for each geom for a list of mappable aesthetics.
+
+## Let's get fancier and add coloring
+```{r fig.height=3}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length, color=Species, size=Petal.Length))
+```
+
+## Using a continuous variable
+```{r}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length, color=Petal.Length)) +
+  scale_color_continuous(low = "white", high = "green")
+```
+
+## Other aesthetic attributes: Size
+```{r,warning=FALSE}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length, size=Petal.Length, color=Species))
+```
+
+## Geoms - lots of them
+
+Common geoms to use are below. Each of these requires a different aesthetic mapping.
+
+- geom_point() - scatterplot
+- geom_line() - line
+- geom_bar() - barplot - requires 
+- geom_boxplot() - boxplot
+- geom_tile() - "heatmap"
+- geom_histogram() - histogram
+
+I will try to talk about two or three of them.
+
+## Histograms
+
+```{r ,warning=FALSE}
+ggplot(iris) + geom_histogram(aes(x= Sepal.Width, fill=Species, group=Species))
+```
+
+## Boxplots
+
+```{r,warning=FALSE}
+ggplot(iris) + geom_violin(aes(x=Species, y=Sepal.Width))
+```
+
+## Layering geoms
+
+Where ggplot2 becomes very powerful is that it allows you to layer geoms. Here we're looking at a smoothed version of the data over all coordinates using loess smoothing.
+
+```{r,warning=FALSE}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length)) + 
+  geom_smooth(aes(x= Sepal.Width, y=Sepal.Length))
+```
+
+## Facets - Subsetting the data
+Perhaps we want to visualize the data onto three separate plots (one for each species). 
+We can do this with facets:
+
+```{r,warning=FALSE}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length)) + 
+  facet_grid(facets=Species ~ .)
+```
+
+For rows, we can change the facet_grid() order:
+
+```{r eval=FALSE,warning=FALSE}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length)) + 
+  facet_grid(facets=. ~ Species)
+```
+
+## Theme properties and scaling
+
+The look of everything on the graph can be customized, including
+
+- color scale (continuous or discrete colors)
+- order of elements
+- fonts of everything
+- labels and legends
+
+See ?theme for more information. Also: http://sharpstatistics.co.uk/r/ggplot2-guide/
+
+## Theme properties
+
+The default theme is called theme_grey(). You can see all of the properties of a theme by looking at it.
+
+```{r}
+theme_grey()
+```
+
+## Making a new theme
+
+To customize the theme, you must use elements to fill out the various properties of the theme list. Each of these properties maps to a specific element, either element_text, element_rect, or element_line.
+
+For example, we want a white background and different fonts for the axis titles.
+```{r}
+theme_new <- theme(panel.background = element_rect(fill = "white"), 
+                   axis.title.x = element_text(family = "Times New Roman"),
+                   axis.title.y = element_text(family = "Arial"))
+
+```
+
+## Trying our new theme out
+
+```{r,warning=FALSE}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length)) + theme_new
+```
+
+## Changing a discrete color scale
+
+```{r}
+ggplot(iris) + geom_point(aes(x= Sepal.Width, y=Sepal.Length, color=Species)) +
+  scale_color_manual(values= c("blue", "purple", "gold"))  
+```
+
+## If your data is originally in a matrix like format
+
+For bioinformaticians, we often work with a matrix like format where genes are rows and samples are columns. This "wide" data format is not really usable by ggplot.  
+
+We need to "melt" the data frame to make it easier for ggplot to work with. Our melted data frame will have one data point for row, and additional Gene and Sample Columns.  First we load our data in.
+
+```{r}
+library(reshape2)
+expData <- data.frame( 
+  Gene = c("G1","G2","G3","G4", "G5", "G6", "G7", "G8"),
+  Tumor1 = c( 5.6, 6.2, 5.6, 6.6, 1.3, 1.4, 2.1, 2.3),
+  Tumor2 = c(5.4, 6.1, 5.8, 6.2, 1.3, 1.8, 2.2, 2.1),
+  Normal1 = c(2.0, 2.5, 1.1, 2.8, 5.5, 5.8, 6.1, 5.7),
+  Normal2 = c(2.1, 2.6, 1.3, 2.4, 5.7, 5.4, 5.8, 5.9)
+)
+expData
+```
+
+## Melting the data into longform data
+
+Then we melt the data using the melt() function:
+
+```{r}
+expDataMelt <- melt(expData, id.vars="Gene", variable.name="Sample",
+                    value.name = "value")
+expDataMelt
+```
+
+## Making a heatmap with our melted data
+
+```{r}
+ggplot(expDataMelt) + geom_tile(aes(x=Sample, y=Gene, fill=value)) + 
+scale_fill_gradient(low="white", high = "darkgreen")
+```
+
+## Using the built in Interface to ColorBrewer
+
+Try different palette numbers here!
+
+```{r}
+ggplot(expDataMelt) + geom_tile(aes(x=Sample, y=Gene, fill=value)) + 
+ scale_fill_distiller(type="div", palette = 2)
+```
+
+## Rotating labels and prettifying
+
+You can change labels using the labs() function and you can also use one theme as a starting point and modify it as you wish.
+
+```{r}
+ggplot(expDataMelt) + geom_tile(aes(x=Sample, y=Gene, fill=value)) + 
+  scale_fill_gradient(low="white", high = "darkgreen") + 
+  labs(x= "Sample Label", fill="Expression") +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle=90))
+```
+
+## Making a line plot with our melted data
+
+Let's plot the expression values as a line plot. To do this we need to tell ggplot2 that we want to plot each line by gene group. Additionaly we want a facet for each gene.
+
+```{r}
+ggplot(expDataMelt) + geom_line(aes(x=Sample, y=value, color=Gene, group=Gene)) +   facet_grid(facets= Gene ~.)
+```
+
+## A More Complex Example
+
+```{r eval =FALSE}
+ggplot(drugmelt[drugmelt$variable == "S6_pS235_S236" & !is.na(drugmelt$Stim) &
+                  drugmelt$Cell == "BT20" & !drugmelt$Drug %in% c("DAS", "MEKi") & 
+                  drugmelt$Time < 720,], aes(Time, value, group=DS, colour=DS)) + 
+	geom_point() + geom_line() + facet_grid(Stim ~ Drug, margin=T) + 
+  scale_x_continuous(breaks = c(30, 120, 480, 720)) + 
+  theme(legend.position = "none", axis.text.x = element_text(angle=90)) 
+```
+
+![S6 example](S6-example.png)
+
+## Interactive plots with ggvis
+
+ggplot2 is great for static graphics. But for interactive graphics that allow you to change parameters, you will need to learn ggvis.
+
+The good news: ggvis uses a similar grammar.
+The bad news: everything has a different name. Learning how to parametrize a plot can be tricky.
+
+## Thanks!
+
+- Hadley Wickham for ggplot2 and ggvis
+- Eric Leung for showing us knitR/Sweave
+
+This presentation is available here: http://bit.ly/1GJu8GV
+
+![http://bit.ly/1FdgaLF](qrcode.png)
+
+## Future Topics?
+
+- Faculty Research Map
+- OHSU Graduates in the real world

@@ -1,0 +1,24 @@
+---
+title: 'Module 7: Bioconductor'
+author: "Ted Laderas"
+date: "July 9, 2015"
+output: html_document
+---
+
+Bioconductor is a universe unto itself. 
+
+Part of what makes Bioconductor work is that they were very smart in specifying data structures for bioinformatic problems we do lots of work with.
+
+For expression data, there is the ExpressionSet.
+
+```{r}
+summary(cars)
+```
+
+For genomic data.
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
