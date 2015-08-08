@@ -5,10 +5,17 @@ date: "July 9, 2015"
 output: html_document
 ---
 
-#R Bootcamp for Programming
-##Module 2: Vectors, Data Frames, Subsetting, Filtering, and Ordering
+## Overview
 
-Before you start: remember to set your working directory to the module2 folder!
+1. Vectors
+2. More about Data Frames
+3. Subsetting
+4. Filtering
+5. Sampling and Ordering
+
+## Setup Workspace
+
+Before you start: remember to set your working directory to the `module2` folder!
 
 Now, let's load up the workspace:
 ```{r}
