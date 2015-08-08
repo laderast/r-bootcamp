@@ -174,11 +174,14 @@ they distributed normally?
 # Space for your answer here
 ```
 
-#### Vector datatypes and casting
-There are four useful vector datatypes to keep in mind: numeric, character,
-boolean and factor.
+### Vector Datatypes and Casting
 
-We've already seen numeric vectors:
+There are four useful vector datatypes to keep in mind: 
+
+- numeric, 
+- character,
+- boolean, and
+- factor.
 
 ```{r}
 c(1,2,3,5)
