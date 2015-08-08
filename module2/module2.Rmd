@@ -195,7 +195,16 @@ Another useful way to initialize a vector is by using a sequence:
 c(1:10)
 ```
 
-Boolean vectors are simply TRUE/FALSE:
+#### Character
+
+Characters can also be put into vectors:
+```{r}
+c("foo", "bar", "baz")
+```
+
+#### Boolean
+
+Boolean vectors are simply `TRUE`/`FALSE`:
 ```{r}
 c(TRUE,TRUE,TRUE,FALSE)
 ```
