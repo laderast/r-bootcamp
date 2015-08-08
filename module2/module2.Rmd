@@ -183,12 +183,14 @@ There are four useful vector datatypes to keep in mind:
 - boolean, and
 - factor.
 
+#### Numeric
+
+We've already seen numeric vectors:
 ```{r}
 c(1,2,3,5)
 ```
 
-Another useful way to initialize a vector is using a sequence:
-
+Another useful way to initialize a vector is by using a sequence:
 ```{r}
 c(1:10)
 ```
