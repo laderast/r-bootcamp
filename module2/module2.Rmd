@@ -271,100 +271,123 @@ testTable2 <- read.table("mouseData.txt", stringsAsFactors=FALSE, header=TRUE)
 summary(testTable2)
 ```
 
-#################################
-###Part 2: More about Data Frames
-#################################
-##data.frames consist of associated vectors that have the same length
-##in a matrix-like format
-##columns do not have to be the same data type; can mix
-##boolean, character, factor, and numeric data types in the same data frame
+## Part 2: More about Data Frames
 
-##show a dataframe example (that we have already seen)
+`data.frames` consist of associated vectors that have the same length in a
+matrix-like format. The columns do not have to be the same data type; you can
+mix boolean, character, factor, and numeric data types in the same data frame.
+```{r}
+# Show a dataframe example (that we have already seen)
 MouseFrame
+```
 
-##dataframes have two properties: number of rows
-##and number of columns
-
+`data.frames` have two properties: number of rows and number of columns.
+```{r}
 nrow(MouseFrame)
 ncol(MouseFrame)
 
-##can also get both of these properties by dim
+# Can also get both of these properties by dim 
 dim(MouseFrame)
-
-##show only the first five rows
-##useful for checking that you read in data properly
-MouseFrame[1:5,]
-
-##QUESTION: note that the column of each data frame is pretty much a vector, but a
-##row is actually a list. Why is that?
-
-```{r}
-#space for your answer here
 ```
 
+Here we can show only the first five rows, which can be useful for checking that
+you read in data properly.
+```{r}
+MouseFrame[1:5,]
+```
 
-##data frames have two kinds of names associated with them:
-##column names (usually corresponds to variables):
+**QUESTION 2-1**: Note that the column of each data frame is pretty much a
+vector, but a row is actually a list. Why is that?
+```{r}
+# Space for your answer here
+```
+
+Data frames have two kinds of names associated with them:
+
+- Column names (usually corresponds to variables):
+```{r}
 colnames(MouseFrame)
+```
 
-##row names (usually subjects (such as patients) or gene names)
-##one requirement of rownames is that each row name is unique
-##so that subsetting by name will return a unique result. Patients
-##and genes tend to have a unique identifier that we can use. In
-##this case, the unique identifier is the MouseID
+- Row names (usually subjects, such as patients, or gene names):
+```{r}
 rownames(MouseFrame)
+```
 
-##access only the Weights column of MouseFrame
+One requirement of row names is that each row name is unique so that subsetting
+by name will return a unique result. Patients and genes tend to have a unique
+identifier that we can use. In this case, the unique identifier is the MouseID.
+
+```{r}
+# Access only the Weights column of MouseFrame
 MouseFrame$Weight
+```
 
-####QUESTION 2-1: what happens when you access the Gender column?
-####How does it differ from the weights column?
-####Hint: use class() to compare the different columns
+**QUESTION 2-1**: What happens when you access the Gender column? How does it
+differ from the weights column? Hint: use `class()` to compare the different
+columns. 
+```{r}
+# Space for your answer here
+```
 
-##summarize mouse frame
+### Summarize Mouse Data Frame
+
+You can easily see some descriptive statistics with the `summary()` function.
+```{r}
 summary(MouseFrame)
+```
 
-####QUESTION 2-2: How many Males and Females are there?
-####Is this a balanced design?
+**QUESTION 2-2**: How many Males and Females are there? Is this a balanced
+design?
 
-##initializing a dataframe from a set of vectors
+### Initializing a `data.frame` from a Set of Vectors
+
+If you remember from above, a `data.frame` is a group of associated vectors with
+the same length so here, let's make a data frame from a some vectors.
+```{r}
 factorVec <- factor(c("A", "A", "B", "C", "C"))
 massVec <- c(12, 1.4, 2.4, 6.4, 10)
 nameVec <- c("Moe", "Minnie", "Curly", "Mickey", "Larry")
 
 dF <- data.frame(nameVec, massVec,factorVec)
+```
 
-##note that column names are derived from the original vector names
-##however, using assignment, you can change the column names when you 
-##initialize them.
-##in terms of reproducibility, try to make a new copy of a data frame
-##whenever you manipulate the contents.  This leaves a clear audit trail
-##in your script.
+Note that column names are derived from the original vector names However, using
+assignment, you can change the column names when you initialize them.  In terms
+of reproducibility, try to make a new copy of a data frame whenever you
+manipulate the contents.  This leaves a clear audit trail in your script.
 
+```{r}
 dF2 <- data.frame(idVec=nameVec, mass=massVec,class=factorVec)
+```
 
-##can also add an extra column to a data frame
-
+We can also add an extra column to a data frame.
+```{r}
 anotherVec <- c(1,4,4,10,10)
-
 dF3 <- data.frame(dF2, anotherVec)
+```
 
-##accessing individual columns can also be done using $
-##this is useful for filtering operations
+### Accessing Individual Columns can Also be Done Using `$`
 
+The dollar sign, `$`, is useful for filtering operations.
+```{r}
 dF3$anotherVec
+```
 
-##if you need to do a lot of column based opertions on a data.frame,
-##you can use attach()
+If you need to do a lot of column based opertions on a `data.frame`, you can use
+`attach()`.
+```{r}
 attach(dF3)
 idVec
 mass
+```
 
-##when you're done with manipulating the data frame, remember to detach it.
-##otherwise things get confusing, especially when you have data frames
-##with identical column names.
-
+When you're done with manipulating the data frame, remember to detach it.
+Otherwise things get confusing, especially when you have data frames with
+identical column names.
+```{r}
 detach(dF3)
+```
 
 
 #######################################################
