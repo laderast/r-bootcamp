@@ -22,7 +22,7 @@ Now, let's load up the workspace:
 load("module2.RData")
 ```
 
-##Part 1: Vectors
+## Part 1: Vectors
 
 Let's look at a vector in the workspace.
 
@@ -30,32 +30,33 @@ Let's look at a vector in the workspace.
 weights
 ```
 
-Note that each slot in a vector can have a unique name
+Note that each slot in a vector can have a unique name.
 
 ```{r}
 names(weights)
 ```
 
-One of the properties a vector has is length.
+Length is one of the properties a vector has.
 
 ```{r}
-###a vector has a length
+# A vector has a length
 length(weights)
 ```
 
-The weights vector can be subsetted. Let's get the very first weight.
+The `weights` vector can be subsetted. Let's get the very first weight.
 
 ```{r}
 weights[1]
 ```
 
-If we pass a sequence to the vector, we can subset. Here we want to grab the first 5 weights, so we pass a sequence from 1 to 5.
+If we pass a sequence to the vector, we can subset. Here we want to grab the
+first 5 weights, so we pass a sequence from 1 to 5.
 
 ```{r}
-#a sequence is actually a vector
+# A sequence is actually a vector
 1:5
 
-###get the first 5 weights
+# Get the first 5 weights
 weights[1:5]
 ```
 
@@ -67,36 +68,37 @@ weights["M15"]
 
 **QUESTION 1-1**: How would we get the last 5 weights?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
 **QUESTION 1-2**: How would we get the first 5 weights in reverse order?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-###Assignment in Vectors
+### Assignment in Vectors
 
-In general, assignment is done by using the <- operator. Here we assign the first 5 elements of the weights vector to b.
+In general, assignment is done by using the `<-` operator. Here we assign the
+first 5 elements of the weights vector to `b`.
 
 ```{r}
 b <- weights[1:5]
 b
 ```
 
-###Operations on Vectors
+### Operations on Vectors
 
 In general, if you can do an operation on a vector all at once, try to do it (as R is optimized for this).
 
 ```{r}
-###run the mean on a vector
+# Run the mean on a vector
 meanWeight <- mean(weights)
 ```
 
-Missing numeric values tend to be coded as NAs. Not all functions will handle
+Missing numeric values tend to be coded as `NA`s. Not all functions will handle
 `NA`s the same. In module 3, we will talk about the `na.omit()` function.
 
-#### Vector operations
+### Vector Operations
 Some operations output a vector of the same length. Let's get the residual sum
 of squares.
 
@@ -106,24 +108,24 @@ resids <- weights - meanWeight
 
 **QUESTION 1-3**: What happened here? Why can we subtract a scalar from a vector?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
 **QUESTION 1-4**: What happens when you try to subtract two vectors of unequal
 lengths? I.e. `weights[1:5] - weights[1:2]`
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-Another example of a vector operation:
+Here's another example of vector operations:
 ```{r}
-##look at resids
+# Look at resids
 resids
 
-##square the residuals
+# Square the residuals
 sqResids <- resids^2
 
-##produce residual sum of squares
+# Produce residual sum of squares
 sum(sqResids)
 ```
 
@@ -143,32 +145,33 @@ vec2
 ```
 
 **QUESTION 1-5**: What happens when you try to mix characters and numbers? What
-does this tell you about vectors?  `c("This is character data", 1:5)`
+does this tell you about vectors? I.e. `c("This is character data", 1:5)`
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-**QUESTION 1-6**: How might you combine c() and a series of names to pull out
+**QUESTION 1-6**: How might you combine `c()` and a series of names to pull out
 only the "M1", "M5", and "M10" weights? This is another kind of subsetting
 operation, and we'll cover it more in detail later.
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-#### Descriptive statistics and exploratory data analysis
+### Descriptive Statistics and Exploratory Data Analysis
+
 You can run operations on a single vector.
 ```{r}
-#show mean and quantiles
+# Show mean and quantiles
 summary(weights)
 
-#show a histogram
+# Show a histogram
 hist(weights)
 ```
 
 **QUESTION 1-7**: What can you say about the distribution of weights? i.e., are
 they distributed normally?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
 #### Vector datatypes and casting
