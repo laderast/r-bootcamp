@@ -5,17 +5,24 @@ date: "July 9, 2015"
 output: html_document
 ---
 
-#R Bootcamp for Programming
-##Module 2: Vectors, Data Frames, Subsetting, Filtering, and Ordering
+## Overview
 
-Before you start: remember to set your working directory to the module2 folder!
+1. Vectors
+2. More about Data Frames
+3. Subsetting
+4. Filtering
+5. Sampling and Ordering
+
+## Setup Workspace
+
+Before you start: remember to set your working directory to the `module2` folder!
 
 Now, let's load up the workspace:
 ```{r}
 load("module2.RData")
 ```
 
-##Part 1: Vectors
+## Part 1: Vectors
 
 Let's look at a vector in the workspace.
 
@@ -23,32 +30,33 @@ Let's look at a vector in the workspace.
 weights
 ```
 
-Note that each slot in a vector can have a unique name
+Note that each slot in a vector can have a unique name.
 
 ```{r}
 names(weights)
 ```
 
-One of the properties a vector has is length.
+Length is one of the properties a vector has.
 
 ```{r}
-###a vector has a length
+# A vector has a length
 length(weights)
 ```
 
-The weights vector can be subsetted. Let's get the very first weight.
+The `weights` vector can be subsetted. Let's get the very first weight.
 
 ```{r}
 weights[1]
 ```
 
-If we pass a sequence to the vector, we can subset. Here we want to grab the first 5 weights, so we pass a sequence from 1 to 5.
+If we pass a sequence to the vector, we can subset. Here we want to grab the
+first 5 weights, so we pass a sequence from 1 to 5.
 
 ```{r}
-#a sequence is actually a vector
+# A sequence is actually a vector
 1:5
 
-###get the first 5 weights
+# Get the first 5 weights
 weights[1:5]
 ```
 
@@ -60,36 +68,37 @@ weights["M15"]
 
 **QUESTION 1-1**: How would we get the last 5 weights?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
 **QUESTION 1-2**: How would we get the first 5 weights in reverse order?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-###Assignment in Vectors
+### Assignment in Vectors
 
-In general, assignment is done by using the <- operator. Here we assign the first 5 elements of the weights vector to b.
+In general, assignment is done by using the `<-` operator. Here we assign the
+first 5 elements of the weights vector to `b`.
 
 ```{r}
 b <- weights[1:5]
 b
 ```
 
-###Operations on Vectors
+### Operations on Vectors
 
 In general, if you can do an operation on a vector all at once, try to do it (as R is optimized for this).
 
 ```{r}
-###run the mean on a vector
+# Run the mean on a vector
 meanWeight <- mean(weights)
 ```
 
-Missing numeric values tend to be coded as NAs. Not all functions will handle
+Missing numeric values tend to be coded as `NA`s. Not all functions will handle
 `NA`s the same. In module 3, we will talk about the `na.omit()` function.
 
-#### Vector operations
+### Vector Operations
 Some operations output a vector of the same length. Let's get the residual sum
 of squares.
 
@@ -99,24 +108,24 @@ resids <- weights - meanWeight
 
 **QUESTION 1-3**: What happened here? Why can we subtract a scalar from a vector?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
 **QUESTION 1-4**: What happens when you try to subtract two vectors of unequal
 lengths? I.e. `weights[1:5] - weights[1:2]`
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-Another example of a vector operation:
+Here's another example of vector operations:
 ```{r}
-##look at resids
+# Look at resids
 resids
 
-##square the residuals
+# Square the residuals
 sqResids <- resids^2
 
-##produce residual sum of squares
+# Produce residual sum of squares
 sum(sqResids)
 ```
 
@@ -136,239 +145,289 @@ vec2
 ```
 
 **QUESTION 1-5**: What happens when you try to mix characters and numbers? What
-does this tell you about vectors?  `c("This is character data", 1:5)`
+does this tell you about vectors? I.e. `c("This is character data", 1:5)`
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-**QUESTION 1-6**: How might you combine c() and a series of names to pull out
+**QUESTION 1-6**: How might you combine `c()` and a series of names to pull out
 only the "M1", "M5", and "M10" weights? This is another kind of subsetting
 operation, and we'll cover it more in detail later.
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-#### Descriptive statistics and exploratory data analysis
+### Descriptive Statistics and Exploratory Data Analysis
+
 You can run operations on a single vector.
 ```{r}
-#show mean and quantiles
+# Show mean and quantiles
 summary(weights)
 
-#show a histogram
+# Show a histogram
 hist(weights)
 ```
 
 **QUESTION 1-7**: What can you say about the distribution of weights? i.e., are
 they distributed normally?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
-#### Vector datatypes and casting
-There are four useful vector datatypes to keep in mind: numeric, character,
-boolean and factor.
+### Vector Datatypes and Casting
+
+There are four useful vector datatypes to keep in mind: 
+
+- numeric, 
+- character,
+- boolean, and
+- factor.
+
+#### Numeric
 
 We've already seen numeric vectors:
-
 ```{r}
 c(1,2,3,5)
 ```
 
-Another useful way to initialize a vector is using a sequence:
-
+Another useful way to initialize a vector is by using a sequence:
 ```{r}
 c(1:10)
 ```
 
-Boolean vectors are simply TRUE/FALSE:
+#### Character
+
+Characters can also be put into vectors:
+```{r}
+c("foo", "bar", "baz")
+```
+
+#### Boolean
+
+Boolean vectors are simply `TRUE`/`FALSE`:
 ```{r}
 c(TRUE,TRUE,TRUE,FALSE)
 ```
 
 To some extent, we can convert between vector types using `as.numeric()` and
 `as.character()`.
-
 ```{r}
 as.character(c(1,2,3,5))
 ```
 
-##factor vectors can be ordered (by specifying the level argument) or
-##unordered (by not specifying the level argument). The ordering impacts
-##properties such as the order the factors are plotted, the order in which
-##factors are reported in table() and the way other functions treat them.
-##
-##note that levels has to contain all factors.
+#### Factors
+
+Factor vectors can be ordered (by specifying the level argument) or unordered
+(by not specifying the level argument). The ordering impacts properties such as
+the order the factors are plotted, the order in which factors are reported in
+table(), and the way other functions treat them. 
+
+Note that levels have to contain all factors.
+```{r}
 testVecFac <- factor(c("D", "D", "E"), levels=c("D", "E"))
+```
 
-
-
-##character and factor vectors are for the most part interchangable for tables
+Character and factor vectors are for the most part interchangable for tables.
+```{r}
 testVecChar <- c("A", "B", "C","C", "D")
 testVecFac <- factor(c("A", "B", "C","C", "D"))
 
 table(testVecChar)
 table(testVecFac)
+```
 
-##However, when we use numbers as factors be aware that as.numeric() doesn't work.
-##This is due to the internal representation of factors as integers.
+However, when we use numbers as factors, be aware that `as.numeric()` doesn't
+work. This is due to the internal representation of factors as integers.
+```{r}
 testVecFac <- factor(c(1,5,5,56), levels=c(1,5,56))
 as.numeric(testVecFac)
+```
 
-##instead, we must first cast to character, and then numeric:
+Instead, we must first cast the vector to character, and then numeric:
+```{r}
 as.numeric(as.character(testVecFac))
+```
 
-##A final note: you may notice that read.table() will treat any strings as factors
-##when loading. You can override this behavior by setting the argument stringsAsFactors
-##to FALSE (refer to ?read.table for more information.)
-##whether you will want your strings represented as characters or factors is dependent
-##on the application.  
+A final note: you may notice that `read.table()` will treat any strings as
+factors when loading. You can override this behavior by setting the argument
+`stringsAsFactors` to `FALSE` (refer to `?read.table` for more information.)
+whether you will want your strings represented as characters or factors is
+dependent on the application.  
 
+```{r}
 testTable <- read.table("mouseData.txt", header=TRUE)
 summary(testTable)
-##you can always cast a factor as a string, remember
+
+# You can always cast a factor as a string, remember
 testTable$Strain <- as.character(testTable$Strain)
 summary(testTable)
+```
 
-##let's try to read the table as characters
+Let's try to read the table as characters.
+```{r}
 testTable2 <- read.table("mouseData.txt", stringsAsFactors=FALSE, header=TRUE)
-##note the numeric property of Weight is preserved
+
+# Note the numeric property of `Weight` is preserved.
 summary(testTable2)
+```
 
+## Part 2: More about Data Frames
 
-#################################
-###Part 2: More about Data Frames
-#################################
-##data.frames consist of associated vectors that have the same length
-##in a matrix-like format
-##columns do not have to be the same data type; can mix
-##boolean, character, factor, and numeric data types in the same data frame
-
-##show a dataframe example (that we have already seen)
+`data.frames` consist of associated vectors that have the same length in a
+matrix-like format. The columns do not have to be the same data type; you can
+mix boolean, character, factor, and numeric data types in the same data frame.
+```{r}
+# Show a dataframe example (that we have already seen)
 MouseFrame
+```
 
-##dataframes have two properties: number of rows
-##and number of columns
-
+`data.frames` have two properties: number of rows and number of columns.
+```{r}
 nrow(MouseFrame)
 ncol(MouseFrame)
 
-##can also get both of these properties by dim
+# Can also get both of these properties by dim 
 dim(MouseFrame)
-
-##show only the first five rows
-##useful for checking that you read in data properly
-MouseFrame[1:5,]
-
-##QUESTION: note that the column of each data frame is pretty much a vector, but a
-##row is actually a list. Why is that?
-
-```{r}
-#space for your answer here
 ```
 
+Here we can show only the first five rows, which can be useful for checking that
+you read in data properly.
+```{r}
+MouseFrame[1:5,]
+```
 
-##data frames have two kinds of names associated with them:
-##column names (usually corresponds to variables):
+**QUESTION 2-1**: Note that the column of each data frame is pretty much a
+vector, but a row is actually a list. Why is that?
+```{r}
+# Space for your answer here
+```
+
+Data frames have two kinds of names associated with them:
+
+- Column names (usually corresponds to variables):
+```{r}
 colnames(MouseFrame)
+```
 
-##row names (usually subjects (such as patients) or gene names)
-##one requirement of rownames is that each row name is unique
-##so that subsetting by name will return a unique result. Patients
-##and genes tend to have a unique identifier that we can use. In
-##this case, the unique identifier is the MouseID
+- Row names (usually subjects, such as patients, or gene names):
+```{r}
 rownames(MouseFrame)
+```
 
-##access only the Weights column of MouseFrame
+One requirement of row names is that each row name is unique so that subsetting
+by name will return a unique result. Patients and genes tend to have a unique
+identifier that we can use. In this case, the unique identifier is the MouseID.
+
+```{r}
+# Access only the Weights column of MouseFrame
 MouseFrame$Weight
+```
 
-####QUESTION 2-1: what happens when you access the Gender column?
-####How does it differ from the weights column?
-####Hint: use class() to compare the different columns
+**QUESTION 2-1**: What happens when you access the Gender column? How does it
+differ from the weights column? Hint: use `class()` to compare the different
+columns. 
+```{r}
+# Space for your answer here
+```
 
-##summarize mouse frame
+### Summarize Mouse Data Frame
+
+You can easily see some descriptive statistics with the `summary()` function.
+```{r}
 summary(MouseFrame)
+```
 
-####QUESTION 2-2: How many Males and Females are there?
-####Is this a balanced design?
+**QUESTION 2-2**: How many Males and Females are there? Is this a balanced
+design?
 
-##initializing a dataframe from a set of vectors
+### Initializing a `data.frame` from a Set of Vectors
+
+If you remember from above, a `data.frame` is a group of associated vectors with
+the same length so here, let's make a data frame from a some vectors.
+```{r}
 factorVec <- factor(c("A", "A", "B", "C", "C"))
 massVec <- c(12, 1.4, 2.4, 6.4, 10)
 nameVec <- c("Moe", "Minnie", "Curly", "Mickey", "Larry")
 
 dF <- data.frame(nameVec, massVec,factorVec)
+```
 
-##note that column names are derived from the original vector names
-##however, using assignment, you can change the column names when you 
-##initialize them.
-##in terms of reproducibility, try to make a new copy of a data frame
-##whenever you manipulate the contents.  This leaves a clear audit trail
-##in your script.
+Note that column names are derived from the original vector names However, using
+assignment, you can change the column names when you initialize them.  In terms
+of reproducibility, try to make a new copy of a data frame whenever you
+manipulate the contents.  This leaves a clear audit trail in your script.
 
+```{r}
 dF2 <- data.frame(idVec=nameVec, mass=massVec,class=factorVec)
+```
 
-##can also add an extra column to a data frame
-
+We can also add an extra column to a data frame.
+```{r}
 anotherVec <- c(1,4,4,10,10)
-
 dF3 <- data.frame(dF2, anotherVec)
+```
 
-##accessing individual columns can also be done using $
-##this is useful for filtering operations
+### Accessing Individual Columns can Also be Done Using `$`
 
+The dollar sign, `$`, is useful for filtering operations.
+```{r}
 dF3$anotherVec
+```
 
-##if you need to do a lot of column based opertions on a data.frame,
-##you can use attach()
+If you need to do a lot of column based opertions on a `data.frame`, you can use
+`attach()`.
+```{r}
 attach(dF3)
 idVec
 mass
+```
 
-##when you're done with manipulating the data frame, remember to detach it.
-##otherwise things get confusing, especially when you have data frames
-##with identical column names.
-
+When you're done with manipulating the data frame, remember to detach it.
+Otherwise things get confusing, especially when you have data frames with
+identical column names.
+```{r}
 detach(dF3)
+```
 
+## Part 3: Subsetting
 
-#######################################################
-##Part 3: Subsetting
-#######################################################
-##Many data structures can be subsetted to produce a smaller result set
-##We've encountered this by using numerics, grabbing the first five rows
-##mouseFrame
+Many data structures can be subsetted to produce a smaller result set. We've
+encountered this by using numerics to grab the first five rows MouseFrame.
+```{r}
 MouseFrame[1:5,]
+```
 
-##we can mix subsetting vectors as well, grabbing only the first five rows and
-##the Strain and Weight Columns
+We can mix subsetting vectors as well, grabbing only the first five rows and
+the Strain and Weight Columns.
+```{r}
 MouseFrame[1:5,c("Strain","Weight")]
+```
 
-##if we don't want a column or row, we can remove it by using the "-" operator.
-##note that this doesn't work for any index vectors except the numerical index.
-##I tend not to use this and instead will use a colnames or rownames subset as above.
+If we don't want a column or row, we can remove it by using the `-` operator.
+Note that this doesn't work for any index vectors except the numerical index.  I
+tend not to use this and instead will use a `colnames` or `rownames` subset as
+above.
+```{r}
 MouseFrame[-c(1:3), -1]
+```
 
-##another way of subsetting is by using a boolean vector, which seems kind of dumb,
-##until you realize that you can generate this boolean vector using other methods.
-##(see Part 4).  In general, we are trying to avoid hardcoding values, and subsetting
-##on specific criteria makes our code more generalizable.
-
+Another way of subsetting is by using a boolean vector, which seems kind of
+dumb, until you realize that you can generate this boolean vector using other
+methods (see Part 4).  In general, we are trying to avoid hardcoding values, and
+subsetting on specific criteria makes our code more generalizable.
+```{r}
 MouseFrame[,c(TRUE,TRUE,FALSE)]
-
-####QUESTION 3-1: what happens when you use a boolean vector that's shorter than the number
-####of columns? What happens with the remaining columns?  Are they returned?
-
-```{r}
-#space for your answer here
 ```
 
-
-####QUESTION 3-2: How would we select every third row? Hint: help("%%")
-
+**QUESTION 3-1**: What happens when you use a boolean vector that's shorter than the number of columns? What happens with the remaining columns? Are they returned?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
+**QUESTION 3-2**: How would we select every third row? Hint: help("%%")
+```{r}
+# Space for your answer here
+```
 
 #######################################################
 ##Part 4: Filtering
