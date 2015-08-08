@@ -211,53 +211,65 @@ c(TRUE,TRUE,TRUE,FALSE)
 
 To some extent, we can convert between vector types using `as.numeric()` and
 `as.character()`.
-
 ```{r}
 as.character(c(1,2,3,5))
 ```
 
-##factor vectors can be ordered (by specifying the level argument) or
-##unordered (by not specifying the level argument). The ordering impacts
-##properties such as the order the factors are plotted, the order in which
-##factors are reported in table() and the way other functions treat them.
-##
-##note that levels has to contain all factors.
+#### Factors
+
+Factor vectors can be ordered (by specifying the level argument) or unordered
+(by not specifying the level argument). The ordering impacts properties such as
+the order the factors are plotted, the order in which factors are reported in
+table(), and the way other functions treat them. 
+
+Note that levels have to contain all factors.
+```{r}
 testVecFac <- factor(c("D", "D", "E"), levels=c("D", "E"))
+```
 
-
-
-##character and factor vectors are for the most part interchangable for tables
+Character and factor vectors are for the most part interchangable for tables.
+```{r}
 testVecChar <- c("A", "B", "C","C", "D")
 testVecFac <- factor(c("A", "B", "C","C", "D"))
 
 table(testVecChar)
 table(testVecFac)
+```
 
-##However, when we use numbers as factors be aware that as.numeric() doesn't work.
-##This is due to the internal representation of factors as integers.
+However, when we use numbers as factors, be aware that `as.numeric()` doesn't
+work. This is due to the internal representation of factors as integers.
+```{r}
 testVecFac <- factor(c(1,5,5,56), levels=c(1,5,56))
 as.numeric(testVecFac)
+```
 
-##instead, we must first cast to character, and then numeric:
+Instead, we must first cast the vector to character, and then numeric:
+```{r}
 as.numeric(as.character(testVecFac))
+```
 
-##A final note: you may notice that read.table() will treat any strings as factors
-##when loading. You can override this behavior by setting the argument stringsAsFactors
-##to FALSE (refer to ?read.table for more information.)
-##whether you will want your strings represented as characters or factors is dependent
-##on the application.  
+A final note: you may notice that `read.table()` will treat any strings as
+factors when loading. You can override this behavior by setting the argument
+`stringsAsFactors` to `FALSE` (refer to `?read.table` for more information.)
+whether you will want your strings represented as characters or factors is
+dependent on the application.  
 
+```{r}
 testTable <- read.table("mouseData.txt", header=TRUE)
 summary(testTable)
-##you can always cast a factor as a string, remember
+
+# You can always cast a factor as a string, remember
 testTable$Strain <- as.character(testTable$Strain)
 summary(testTable)
+```
 
-##let's try to read the table as characters
+Let's try to read the table as characters.
+```{r}
 testTable2 <- read.table("mouseData.txt", stringsAsFactors=FALSE, header=TRUE)
-##note the numeric property of Weight is preserved
-summary(testTable2)
 
+# Note the numeric property of `Weight` is preserved.
+summary(testTable2)
+```
 
 #################################
 ###Part 2: More about Data Frames
