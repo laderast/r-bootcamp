@@ -389,45 +389,45 @@ identical column names.
 detach(dF3)
 ```
 
+## Part 3: Subsetting
 
-#######################################################
-##Part 3: Subsetting
-#######################################################
-##Many data structures can be subsetted to produce a smaller result set
-##We've encountered this by using numerics, grabbing the first five rows
-##mouseFrame
+Many data structures can be subsetted to produce a smaller result set. We've
+encountered this by using numerics to grab the first five rows MouseFrame.
+```{r}
 MouseFrame[1:5,]
+```
 
-##we can mix subsetting vectors as well, grabbing only the first five rows and
-##the Strain and Weight Columns
+We can mix subsetting vectors as well, grabbing only the first five rows and
+the Strain and Weight Columns.
+```{r}
 MouseFrame[1:5,c("Strain","Weight")]
+```
 
-##if we don't want a column or row, we can remove it by using the "-" operator.
-##note that this doesn't work for any index vectors except the numerical index.
-##I tend not to use this and instead will use a colnames or rownames subset as above.
+If we don't want a column or row, we can remove it by using the `-` operator.
+Note that this doesn't work for any index vectors except the numerical index.  I
+tend not to use this and instead will use a `colnames` or `rownames` subset as
+above.
+```{r}
 MouseFrame[-c(1:3), -1]
+```
 
-##another way of subsetting is by using a boolean vector, which seems kind of dumb,
-##until you realize that you can generate this boolean vector using other methods.
-##(see Part 4).  In general, we are trying to avoid hardcoding values, and subsetting
-##on specific criteria makes our code more generalizable.
-
+Another way of subsetting is by using a boolean vector, which seems kind of
+dumb, until you realize that you can generate this boolean vector using other
+methods (see Part 4).  In general, we are trying to avoid hardcoding values, and
+subsetting on specific criteria makes our code more generalizable.
+```{r}
 MouseFrame[,c(TRUE,TRUE,FALSE)]
-
-####QUESTION 3-1: what happens when you use a boolean vector that's shorter than the number
-####of columns? What happens with the remaining columns?  Are they returned?
-
-```{r}
-#space for your answer here
 ```
 
-
-####QUESTION 3-2: How would we select every third row? Hint: help("%%")
-
+**QUESTION 3-1**: What happens when you use a boolean vector that's shorter than the number of columns? What happens with the remaining columns? Are they returned?
 ```{r}
-#space for your answer here
+# Space for your answer here
 ```
 
+**QUESTION 3-2**: How would we select every third row? Hint: help("%%")
+```{r}
+# Space for your answer here
+```
 
 #######################################################
 ##Part 4: Filtering
