@@ -295,14 +295,37 @@ have a function that requires additional arguments.
 
 - Write a function with the following signature: `meanWithNA <- function(x)`.
   Assume x is a vector and has NAs. 
+```{r}
+# Space for your answer here
+```
+
 - Write the function such that it eliminates NAs and returns the mean of the
   remaining values in the vector. If the length of remaining values is 0, have
   the function return NA.
+```{r}
+# Space for your answer here
+```
+
 - Use this function to revise your rowMeans for each data.frame in mouseExpList
   (provided as an data object in module4). 
+```{r}
+# Space for your answer here
+```
+
 - Write another function with the following signature: `compareMTwithRowMean <-
   function(mazeTime, rowMean)` and have it output a vector that is 1 if
   `mazeTime < rowMean`, 0 if not. 
+```{r}
+# Space for your answer here
+```
+
 - Apply this function to `mazeTime3` and `rowMean`. 
+```{r}
+# Space for your answer here
+```
+
 - Count the number of 1s and 0s for each data set. Based on this number, do you
   think the mice learned how to run the maze faster?
+```{r}
+# Space for your answer here
+```
