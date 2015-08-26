@@ -19,15 +19,15 @@ ls()
 
 ### Merging dataframes
 
-Suppose you have two dataframes that have a common identifier (such as MouseID)
-and you want to merge them. If you want to merge on row names, you can use the
-following form: `merge(MouseFrame, MouseCovariates)`
+Suppose you have two dataframes that have a common identifier (such as
+`MouseID`) and you want to merge them. If you want to merge on row names, you
+can use the following form: `merge(MouseFrame, MouseCovariates)`
 
 If you want to merge on an identical column names in both data frames, this works:
 `merge(MouseFrame, MouseCovariates, by="MouseID")`
 
-If the column names were different, we can specify them by using the by.x and
-by.y arguments: 
+If the column names were different, we can specify them by using the `by.x` and
+`by.y` arguments: 
 `merge(MouseFrame, MouseCovariates, by.x="MouseID", by.y="MouseID")`
 
 These merges are known as **natural joins**, because we match every element that we
@@ -62,58 +62,92 @@ little about in the next module.
 # Space for your answer here
 ```
 
-##############################
-###Part 2: Visualizing Data
-##############################
+## Part 2: Visualizing Data
 
-##We've alreadly seen some methods for plotting 1-dimensional data, such as 
-##hist() and boxplot(). boxplot() will also work on data.frames and give you
-##a boxplot per variable.
+We've alreadly seen some methods for plotting 1-dimensional data, such as 
+`hist()` and `boxplot()`. `boxplot()` will also work on `data.frames` and give you
+a boxplot per variable.
 
-##we need to cast MouseBalanceTimeSeries as a data.frame since it is a matrix:
-boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After")
+We need to cast `MouseBalanceTimeSeries` as a `data.frame` since it is a matrix:
+`boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After")`
 
-##We can label the x axes and y axes by supply the xlab and ylab argument
-boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After Treatment",
-        xlab = "Condition", ylab = "Time on Balance Beam (s)")
+We can label the x axes and y axes by supply the `xlab` and `ylab` argument:
 
-##This almost looks good, but we can't read the labels for the different
-##experiments. If we read the help file for ?par() (the graphical parameters),
-##we can adjust those labels by specifying a las = 3 argument:
+```{r}
+boxplot(data.frame(MouseBalanceTimeSeries), 
+        main="Before and After Treatment",
+        xlab = "Condition", 
+        ylab = "Time on Balance Beam (s)")
+```
 
-boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After Treatment",
-        xlab = "Condition", ylab = "Time on Balance Beam (s)", las=3)
+This almost looks good, but we can't read the labels for the different
+experiments. If we read the help file for `?par()` (the graphical parameters),
+we can adjust those labels by specifying a `las = 3` argument:
 
-##let's remove the x label to make it clearer:
+```{r}
+boxplot(data.frame(MouseBalanceTimeSeries), 
+        main="Before and After Treatment",
+        xlab = "Condition", 
+        ylab = "Time on Balance Beam (s)", 
+        las=3)
+```
 
-boxplot(data.frame(MouseBalanceTimeSeries), main="Before and After Treatment",
-        ylab = "Time on Balance Beam (s)", las=3)
+Let's remove the x label to make it clearer:
 
-##what about xy plots? R is equipped to do those as well.
+```{r}
+boxplot(data.frame(MouseBalanceTimeSeries), 
+        main="Before and After Treatment",
+        ylab = "Time on Balance Beam (s)", 
+        las=3)
+```
+
+What about xy plots? R is equipped to do those as well.
+
+```{r}
 data(iris)
 plot(iris[,1], iris[,2])
+```
 
-####QUESTION 2-1. Add arguments to the above plot. Label the x-axis "Sepal Length"
-####and the y-axis "Sepal.Width".  Make the title "Iris Dataset". Save it to a pdf
-####with the name "Iris-plot.pdf".
+**QUESTION 2-1** Add arguments to the above plot. Label the x-axis "Sepal
+Length" and the y-axis "Sepal.Width".  Make the title "Iris Dataset". Save it to
+a pdf with the name "Iris-plot.pdf".
+```{r}
+# Space for your answer here
+```
 
-####QUESTION 2-2. Read the documentation for pairs(). Try it out on the iris dataset
-####(take out the "species" variable.)
-####What does this plot do? Why is it useful?
+**QUESTION 2-2** Read the documentation for `pairs()`. Try it out on the iris
+dataset (take out the "species" variable). What does this plot do? Why is it
+useful?
+```{r}
+# Space for your answer here
+```
 
-##what about pie charts? Pie charts are evil. They are a poor representation of data,
-##and make proportions difficult to compare.  If you really must, read the help file
-##for ?pie.  
+What about pie charts? Pie charts are evil. They are a poor representation of
+data, and make proportions difficult to compare.  If you really must, read the
+help file for `?pie`.  
 
-##as an alternative, consider the stacked bar plot.  
-##subset first ten rows so barplots aren't equal sized
+As an alternative, consider the stacked bar plot.  subset first ten rows so
+barplots aren't equal sized:
+
+```{r}
 smFrame <- MouseFrame[1:10,]
-##tabulate the Gender/Strain cases
+```
+
+Tabulate the Gender/Strain cases:
+
+```{r}
 tab <- table(smFrame$Gender, smFrame$Strain)
-##produce a stacked barplot allowing to compare the distribution of males/females
-##within B6 and D2 strains
-barplot(tab, col=c("blue", "red"), legend=rownames(tab), main = 
-    "Barplot comparing Gender within Strain")
+```
+
+Produce a stacked barplot allowing to compare the distribution of males/females
+within B6 and D2 strains:
+
+```{r}
+barplot(tab, 
+        col=c("blue", "red"), 
+        legend=rownames(tab), 
+        main = "Barplot comparing Gender within Strain")
+```
 
 ##############################
 ###Part 3: Functions and Scope
