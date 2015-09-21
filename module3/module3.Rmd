@@ -310,7 +310,7 @@ so, between which comparison? (B6 pre- to B6 post-, or B6 pre- to D2 pre- or
 There are many other `apply`-type methods. One of the best packages for
 aggregation/apply methods is Hadley Wickam's `plyr` package. It is a bit quirky,
 but provides efficient ways to apply functions across a variety of data
-structures.
+structures. 
 
 `sapply()` and `lapply()` are both methods to work on list-like objects (such as
 vectors and lists). `lapply()` works strictly on lists of objects, which we'll
@@ -318,6 +318,9 @@ talk about in the next section. `sapply()` is much more flexible in terms of
 output.
 
 `mapply()` is used when you have a function that takes multiple arguments.
+
+We will cover `dplyr`, similar to the Hadley Wickham's `plyr` package, and other
+advanced techniques in Module 6.
 
 # Part 5: Lists, Batch processing, and Storing Results
 
