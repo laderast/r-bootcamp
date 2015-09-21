@@ -190,10 +190,13 @@ dbDisconnect(conn=dbConn)
 ###***(Make some cross tables like I did with Date and LabtechID)
 ###***3) If so, does this make your conclusion from 1) stronger or weaker? Why?
 
+#
+
+
 ##############################
 ###Part 3: String Manipulation
 ##############################
-#The following section is optional, but you might find them very helpful.
+#The following section is optional, but you might find it very helpful.
 
 ##obviously, a string can be initialized with ""
 
