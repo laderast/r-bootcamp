@@ -191,6 +191,11 @@ sqrFun <- function(x) {
 **QUESTION 3-2**: Change the above function to accept only single numeric
 inputs.  Hint: use `length()`
 
+```{r}
+# Space for your answer here
+```
+
+
 If you'd like to return multiple values, such as mean and sd, you can use a
 list.  it's best to use a named list to return results.
 
@@ -246,7 +251,8 @@ We've mostly been using global variables by defining them in the workspace.
 
 However, in functions, we can also define variables on the fly. However, because
 of scope, you can't access a variable that was defined in a function in the workspace.
-for example, say I make a function and define an internal variable `intVar`:
+for example, say I make a function and define an internal variable `intVar`. I cannot
+the variable outside of this function.
 
 Another way to think of it, is if you define a variable in brackets, anything in those
 brackets can use that variable. Outside of those brackets, the variable doesn't exist.
@@ -286,10 +292,29 @@ The point is, be careful about naming variables and be explicit about passing
 variables into functions. It's easy to prototype code that accidentally depends
 on global variables that are not explicitly passed into the function. 
 
-Have you wondered what the hell the "..." is in function descriptions? Basically
+###The "..." in function signatures (optional)
+
+Have you ever wondered what the hell the "..." is in function descriptions? Basically
 when a function has "...", it means you can pass it additional arguments to
-internal functions This is really useful when using things like apply and you
-have a function that requires additional arguments.
+internal functions. This is really useful when using things like sapply and you
+have a function that requires additional arguments. 
+
+For example, say we have a function called sumTwoNums() that takes two arguments: 
+A and B and returns their sum. Say we wanted to add 3 to each value in the Weights
+column in MouseFrame. We can pass the 3 as a value for the B parameter because 
+the function signature for sapply() includes the "..."
+
+```{r}
+#look at the documentation for sapply - note that it has the "..." argument
+#in the function signature
+?sapply
+
+sumTwoNums <- function(A, B){return(A+B)}
+
+#here sapply assumes that MouseFrame$Weight is our A argument, but we need to
+#supply a B argument as well
+sapply(MouseFrame$Weight, sumTwoNums, B=3)
+```
 
 **FINAL QUESTION**: This is a multi-part question:
 

@@ -179,6 +179,9 @@ dbClearResult(SQLresult7)
 ##to disconnect from the database, use dbDisconnect()
 dbDisconnect(conn=dbConn)
 
+##Writing Tables can be achieved with a dbWriteTable() command.
+
+
 ##Further reading: For a full list of SQL commands that SQLite understands check this 
 ##link out: http://www.sqlite.org/lang.html
 
