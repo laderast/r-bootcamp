@@ -124,7 +124,7 @@ Why do we care about this? The first reason is that lapply() is inherently faste
 
 Another reason is a related function known as mclapply(), which lets us spread the work over multiple cores. Once you have an lapply statement, it is easy to convert it into an mclapply statement.
 
-```{r}
+```{r eval=FALSE}
 library(parallel)
 outResult <- mclapply(testList, filterFrame, mc.cores=2)
 ```
@@ -179,23 +179,38 @@ The mutate() function allows us to calculate new columns based on old functions.
 
 ```
 
-The transmute function is 
+Honestly, I don't really use transmute(), because it is difficult to understand.
 
 ###filter()
 
-filter() is how we subset in dplyr. 
+filter() is how we subset in dplyr. The trick with filter is that it allows you to use both internal and external criteria to filter.
+
+For example, if we want to find only those rows with Species == "setosa":
+
+```{r}
+iris %>% filter(Species == "setosa")
+```
+
+Or if we have multiple criteria, we can chain them with a `&` (AND operator) or a `|` (OR operator)
+
+```{r}
+iris %>% filter(Species == "setosa" & Sepal.Length < 5)
+```
 
 ###Combining functions together
 
 As you might guess, the strength of using dplyr is when we combine commands together.
 
-###Task: Construct a query of the iris dataset that calculates a new column "PSWaverage" that averages the petal widths and sepal widths and then filters the dataset, returning only those rows with a PSWaverage > 1.8 
+Let's make an 
+
+###Task: Construct a query of the iris dataset that calculates new columns "PetalAve" and "SepalAve" that averages the petal measurments and sepal measurements separately and then filters the dataset, returning only those rows with a PetalAve > 0.5
 
 ```{r}
 library(dplyr)
 data(iris)
 
-iris %>% mutate(PSWaverage = (Petal.Width + Sepal.Width)/2) %>% filter(PSWaverage > 1.8)
+iris %>% mutate(SepalAve = mean(Sepal.Width, Sepal.Length), 
+                PetalAve = mean(Petal.Length, Petal.Width)) %>% filter(PetalAve > 0.5)
 ```
 
 ###Task: Calculate the average Sepal Width for each iris species for those samples that have a Sepal.Length > 5.2
@@ -206,8 +221,6 @@ data(iris)
 
 iris %>% filter(Sepal.Length > 5.2) %>% group_by(Species) %>% summarise(mean=mean(Sepal.Width), count=n())
 ```
-
-###Task: 
 
 ##Part 3: The reshape2 package
 
