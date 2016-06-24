@@ -154,9 +154,13 @@ Let's start doing joins.  We know from our Diagram in `database-introduction.pdf
 SQLquery3 <- "SELECT * FROM Assignment, Experiment WHERE 
   Assignment.ExperimentID = Experiment.ExperimentID"
 SQLresult3 <- dbSendQuery(dbConn, SQLquery3)
+<<<<<<< HEAD
 resFrame3 <- fetch(SQLresult3, n=-1)
 head(resFrame3)
 
+=======
+resFrame <- fetch(SQLresult3, n=-1)
+>>>>>>> 63aed54a2dac6927c61954cac2d1962edb7b7a5c
 dbClearResult(SQLresult3)
 ```
 
@@ -191,9 +195,12 @@ Databases show their power when we add multiple conditions to the WHERE clause, 
 SQLquery5 <- "SELECT * from Mouse WHERE StrainID = 'D2' AND Weight < 70"
 SQLresult5 <- dbSendQuery(dbConn, SQLquery5)
 resFrame5 <- fetch(SQLresult5, n=-1)
+<<<<<<< HEAD
 head(resFrame5)
 
 
+=======
+>>>>>>> 63aed54a2dac6927c61954cac2d1962edb7b7a5c
 dbClearResult(SQLresult5)
 ```
 
