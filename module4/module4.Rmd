@@ -266,8 +266,10 @@ testFun <- function(xVec, yVec){
 
 testFun(xVec=c(1,5), yVec=c(4,6))
 
-# intVar doesn't exist outside of the function (local scope)
-intVar
+# intVar doesn't exist outside of the function (local scope) 
+# try to recall it in the global scope
+
+#intVar
 ```
 
 However, if we globally define a variable in the workspace, a function can "see" this
@@ -316,7 +318,9 @@ sumTwoNums <- function(A, B){return(A+B)}
 sapply(MouseFrame$Weight, sumTwoNums, B=3)
 ```
 
-**FINAL QUESTION**: This is a multi-part question:
+#FINAL PROBLEM 
+
+This is a multi-part question:
 
 - Write a function with the following signature: `meanWithNA <- function(x)`.
   Assume x is a vector and has NAs. 

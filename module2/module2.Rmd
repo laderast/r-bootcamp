@@ -326,6 +326,7 @@ MouseFrame$Weight
 **QUESTION 2-2**: What happens when you access the Gender column? How does it
 differ from the weights column? Hint: use `class()` to compare the different
 columns. 
+
 ```{r}
 # Space for your answer here
 ```
@@ -429,127 +430,134 @@ MouseFrame[,c(TRUE,TRUE,FALSE)]
 # Space for your answer here
 ```
 
-#######################################################
 ##Part 4: Filtering
-#######################################################
-##filtering operations are done by generating a boolean vector using a comparator
-##such as <, >, or ==
-##Here's how to filter on a vector to select those weights with only 
 
+Filtering operations are done by generating a boolean vector using a comparator such as `<`, `>`, or `==`
+
+Here's how to filter on a vector to select those weights that are less than 50:
+
+```{r}
 weights[weights < 50]
+```
 
-####QUESTION 4-1: What does the comparator operator 
-####weights < 50
-####generate? Why does it work?
+**QUESTION 4-1**: What does the comparator operator `weights < 50` generate? Why does it work?
 
-#Filtering on a data frame is identical to filtering on a vector
-#note that we must filter on a column as a criterion.
-#specifically, both MouseFrame$Gender and 
-#subsetting data frames - filtering
-#select only females
+Filtering on a data frame is identical to filtering on a vector. Note that we must filter on a column as a criterion. Specifically, we need to use `MouseFrame$Gender` as our filtering criterion:
 
+```{r}
 MouseFrame[MouseFrame$Gender == "F",]
+```
 
-####QUESTION 4-2: What does 
-####MouseFrame$Gender == "F" 
-####do?  Why does it select the correct cases?
+**QUESTION 4-2**: What does MouseFrame$Gender == "F" do?  Why does it select the correct cases?
 
 ```{r}
 #space for your answer here
 ```
 
-####QUESTION 4-3: how do you select females of strain D2?
-#Hint: it's ok to use more than one operation
-#Hint: you can also chain selections using the & (and) or the | (or) operators
-#Hint: don't forget the comma!
+**QUESTION 4-3**: how do you select females of strain D2? 
+(Hint #1: it's ok to use more than one operation.)
+(Hint #2: you can also chain selections using the & (and) or the | (or) operators.) 
+(Hint #3: don't forget the comma!)
 
 ```{r}
 #space for your answer here
 ```
 
-####QUESTION 4-4: How would we select those mice with a weight
-####less than 50 grams?
+**QUESTION 4-4**: How would we select those mice with a weight less than 50 grams?
 
 ```{r}
 #space for your answer here
 ```
 
 
-##chaining subsetting and filtering operations
-##the difference between subsetting and filtering is largely semantic, but you
-##can think of filtering as part of subsetting operations using some sort of
-##conditional operators.
+###Chaining subsetting and filtering operations
 
-##because they are essentially producing the same thing (boolean vectors), you can 
-##use a combination of subsetting or filtering operators to produce a reduced dataset
+The difference between subsetting and filtering is largely semantic, but you can think of filtering as part of subsetting operations using some sort of conditional operators.
 
+Because they are essentially producing the same thing (boolean vectors), you can use a combination of subsetting or filtering operators to produce a reduced dataset:
+
+```{r}
 MouseFrame[MouseFrame$Strain == "B6", c("Strain","Weight")]
+```
 
-##many statistical methods may require you to recode a group
-##ifelse() works very well for this when you have two groups. 
-##ifelse() takes a test condition, such as a filtering operation, and
-##will produce a code (in this case 1) if the condition is true and another
-##code (in this case 0) if the condition is false.
+Many statistical methods may require you to recode a group. `ifelse()` works very well for this when you have two groups. `ifelse()` takes a test condition, such as a filtering operation, and will produce a code (in this case, 1) if the condition is true and another code (in this case, 0) if the condition is false.
 
+```{r}
 lowWeight <- ifelse(test = MouseFrame$Weight < 45, yes = 1, no = 0)
+```
 
-####QUESTION 4-5: produce a cross table between MouseFrame$Strain and lowWeight
-####(you may need to cast lowWeight as a factor).  Do Weight and Strain appear to
-####be associated?
+**QUESTION 4-5**: produce a cross table between `MouseFrame$Strain` and `lowWeight` (you may need to cast lowWeight as a factor).  Do `Weight` and `Strain` appear to be associated?
 
 ```{r}
 #space for your answer here
 ```
 
-##############################
-#Part 5: Sampling and ordering
-##############################
-###Both sampling and ordering can be thought of as subsetting operations as well.
-###Let's sort MouseFrame by Weight
+##Part 5: Sampling and ordering
 
-####QUESTION 5-1: what does order() do? How can you use it to sort a data frame?
+Both sampling and ordering can be thought of as subsetting operations as well. Let's sort `MouseFrame` by `Weight`.
+
+**QUESTION 5-1**: what does order() do? How can you use it to sort a data frame?
+
+```{r}
 order(MouseFrame$Weight, decreasing=TRUE)
+```
 
 ```{r}
 #space for your answer here
 ```
 
-###we can also specify sorting by multiple factors
+We can also specify sorting by multiple factors
+
+```{r}
 order(MouseFrame$Weight, MouseFrame$Gender)
+```
 
-####QUESTION 5-2: How can we sort the data frame by Strain then Weight?
+**QUESTION 5-2**: How can we sort the data frame by `Strain` then `Weight`?
 
 ```{r}
 #space for your answer here
 ```
 
+###Bootstrap Sampling
 
-#Let's produce bootstrap samples of our dataframe
+Let's produce bootstrap samples of our dataframe. This is very useful when we are doing machine learning and we have a very limited dataset in terms of number of samples.
 
-####QUESTION 5-3: What does the sample() code below do?  How
-#####can we use it to produce samples of our dataframe?
+**QUESTION 5-3**: What does the sample() code below do?  How can we use it to produce samples of our dataframe?
+
+```{r}
 sample(1:nrow(MouseFrame), 5, replace=TRUE)
+```
+
+```{r}
+#space for your answer here
+```
+
+**QUESTION 5-4**: Produce a bootstrap sample without replacement of 7 rows of `MouseFrame`. Confirm that you have sampled unique rows in your dataframe.
 
 ```{r}
 #space for your answer here
 ```
 
 
-####QUESTION 5-4: Produce a bootstrap sample without replacement of 7 rows
-####of MouseFrame. Confirm that you have sampled unique rows in your dataframe.
+###A Note about `make.names()`
+
+Oftentimes, R doesn't like certain naming conventions. For example, for loading in data.frames, the names for variables cannot start with a number. The `make.names()` command can convert bad variable names to R-acceptable variable names (i.e, names like `1Var` will become `X1Var` and names with spaces like `Chick Weight` become `Chick.Weight`). This is really useful if you are loading data whose variable names have been changed and you want a quick way to select them.
 
 ```{r}
-#space for your answer here
+badNames <- c("1Variable", "Bad Name", "Minuses-Are-Bad")
+
+make.names(badNames)
 ```
 
+##FINAL PROBLEM
 
-###A note about make.names()
+Load the iris dataset using data(iris). (this will load the data as the iris object).  
 
-###***FINAL PROBLEM: Load the iris dataset using data(iris). (this will load the data
-###***as the iris object).  
-###***
-###***Produce two different data frames for the setosa and virginica
-###***species, selecting the Petal.Length and Petal.Width columns.  
-###***
-###***How many setosa samples have a Petal Length less than 3.5? 
-###***How many virginica samples have a Petal Width less than 2.0?
+Produce two different data frames for the setosa and virginica species, selecting the Petal.Length and Petal.Width columns. 
+
+1) How many setosa samples have a Petal Length less than 3.5? 
+2) How many virginica samples have a Petal Width less than 2.0?
+
+```{r}
+###Space for your answer here.
+```
