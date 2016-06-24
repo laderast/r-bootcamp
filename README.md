@@ -25,7 +25,7 @@ The content of each module is as follows:
 
 Each folder contains the following files:
 
-1.  moduleX.R - The script
+1.  moduleX.Rmd - The Markdown script you'll be working from. 
 2.  moduleX.RData - workspace consisting of data to manipulate
 3.  moduleX-test-your-knowledge.R - Multiple Choice Quiz to test your knowledge
 4.  moduleX-final-problem.R - Final assignment

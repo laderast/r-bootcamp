@@ -69,10 +69,9 @@ process elements other than a `for` loop.
 # Part 2: Matrices
 (for more on matrices, please refer to "Introduction to R" Chapter 5)
 
-Let's instantiate a matrix:
-Note that when you pass a vector of data to the `matrix()` function, you have it
-fill by row (i.e. fills from left to right until a row is full, then starts a
-tthe next row) or by column (i.e. fills until a colum is full, then starts at
+Let's instantiate a matrix. Note that when you pass a vector of data to the `matrix()` 
+function, you have it fill by row (i.e. fills from left to right until a row is full, 
+then starts a tthe next row) or by column (i.e. fills until a colum is full, then starts at
 the top of the next column). Note that to fill by column, you set `byrow=FALSE`.
 
 ```{r}
@@ -103,8 +102,7 @@ nrow(mat)
 ncol(mat)
 ```
 
-Accessing rows and columns is similar to data frames in which we can call a
-column either by number of by name.
+Accessing rows and columns is similar to data frames in which we can call a column either by number of by name.
 
 ```{r}
 mat[,"Q"]
@@ -128,6 +126,7 @@ mat[2,]
 
 **QUESTION 2-1**: For each colum of `mat`, print the name and the column sum.
 Hint: iterate from 1 to `ncol(mat)`.
+
 ```{r}
 # space for your answer here
 
@@ -135,39 +134,42 @@ Hint: iterate from 1 to `ncol(mat)`.
 
 **QUESTION 2-2**: How do we access multiple rows or columns? Grab the first two
 rows of `mat`.
+
 ```{r}
 # space for your answer here
 
 ```
 
 Accessing a particular cell of a matrix:
+
 ```{r}
 mat[1,2]
 ```
 
 We can mix and match:
+
 ```{r}
 mat["EH", 3]
 ```
 
 We can manipulate the cells by:
 
-**direct assignment**
+**direct assignment**:
 ```{r}
 mat[1,2] <- 33
 mat
 ```
-**arithmetic**
+or **arithmetic**:
 ```{r}
 mat[1,1] <- mat[1,1] * 5
 mat
 ```
 
 # Part 3: If/conditional statements
-- If statements
 
-In general, `if` statements work much like any other language. Here's an `if`
-statement in a `for` loop:
+##If statements
+
+In general, `if` statements work much like any other language. Here's an `if` statement in a `for` loop:
 
 ```{r}
 for(i in 1:length(weights)){
@@ -202,7 +204,8 @@ for(i in 1:length(weights)){
 }
 ```
 
-`else` is also an option.
+`else` is also an option:
+
 ```{r}
 for(i in 1:length(weights)){
     if(weights[i] < 50 && weights[i] > 20){
@@ -233,6 +236,7 @@ MouseBalanceTimeSeries
 
 **QUESTION 4-1**: What do you notice about this time series? Is the data
 complete?
+
 ```{r}
 # space for your answer here
 
@@ -248,6 +252,7 @@ apply(X=MouseBalanceTimeSeries[1:4,], MARGIN=1, FUN=mean)
 
 **QUESTION 4-2**: What is the output of the above command? Is it a matrix or a
 vector?
+
 ```{r}
 # space for your answer here
 
@@ -257,6 +262,7 @@ vector?
 (pre-treatment) to the last three columns (post-treatment) for the first four
 rows of `MouseBalanceTimeSeries`. Would you say there is a difference between
 pre- and post-treatment mice?
+
 ```{r}
 # space for your answer here
 
@@ -302,6 +308,7 @@ column means by `Strain` (remember, the identifiers are identical in both
 Does the data appear to have `Strain` specific differences in column meants? If
 so, between which comparison? (B6 pre- to B6 post-, or B6 pre- to D2 pre- or
 ...)
+
 ```{r}
 # space for your answer here
 
