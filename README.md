@@ -3,7 +3,7 @@ r-bootcamp
 
 [![DOI](https://zenodo.org/badge/8706/laderast/r-bootcamp.svg)](http://dx.doi.org/10.5281/zenodo.13756)
 
-Draft Tutorial for self directed bootcamp for learning R-programming basics.
+Draft Tutorial for self directed bootcamp for learning R-programming basics. To get started, clone or download this repo, and follow the directions in `welcome.pdf`
 
 Written by Ted Laderas with contributions from: Eric Leung, Aurora Blucher, Tracy Edinger, Dian Chase, Gabrielle Choonoo, Clint Olson
 

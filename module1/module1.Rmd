@@ -365,7 +365,9 @@ install.packages("knitr")
 library(knitr)
 ```
 
-Once that's done, we can knit our file. Try out the following command. What is the knitted file saved as?
+Once that's done, we can knit our file. Try out the following command. What is the knitted file saved as? 
+
+Note that if you want to output PDFs, you will need to install LaTeX, which is available here for PCs: http://miktex.org and for Macs: https://tug.org/mactex/.
 
 ```{r eval=FALSE}
 knit("module1.Rmd")
@@ -382,7 +384,3 @@ Fill out the included "module1-final-problem.R" file to do the following:
   5. save the subset as a csv file called "mouse-subset.csv"
 
 Confirm that your script runs using source() and outputs the correct formats for each file.
-
-
-
-

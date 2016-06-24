@@ -1,0 +1,16 @@
+---
+title: "Welcome to R-Bootcamp"
+author: "Ted Laderas"
+date: "June 24, 2016"
+output: pdf_document
+---
+
+Prerequisites to Module 1: download and install the [latest version of R](https://cran.r-project.org) and install [RStudio](https://www.rstudio.com).
+
+To start module 1, [download the zip](https://www.dropbox.com/s/xie0vppcwcdhcp1/module1.zip?dl=0) file containing all the files that you'll need for Module 1. Expand it into a folder in an easy to reach directory, such as your desktop or your home directory.  Remember the path to this folder, as you'll need it when you start up the module.
+
+Next, start up your copy of RStudio and open up the `module1.Rmd` file in the folder.  You will modify this file and run code snippets in the top (or script) window (green). (on Linux/PC you will select the lines to run and use CTRL+ENTER, while with Macs you use CMD+ENTER.)  Think of this file as your worksheet, complete with tips and problems to try.  You will want to save your completed module script for future reference. For more info on using RStudio in scripting mode, go [here](https://support.rstudio.com/hc/en-us/articles/200484448-Editing-and-Executing-Code).
+
+![RStudio Window](image/consolewindow.jpg)
+
+The bottom (blue) window is your console, which you can think of as the direct command line access to R.  When you run code snippets from the script window, the output will appear in the console window.  Since R is an interpreted language, you can also test out code directly here.  One useful tip is that if you mistype a command, you can use the up arrow to retrieve a previously entered command and fix your mistake on the command line. For more info on the RStudio console, go [here](https://support.rstudio.com/hc/en-us/articles/200404846).
