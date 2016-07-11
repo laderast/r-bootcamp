@@ -246,12 +246,11 @@ Writing Tables can be achieved with a dbWriteTable() command. Let's save our new
 dbWriteTable(dbConn, name="allJoinResults", resFrame7)
 ```
 
-Important note. When you are done, to disconnect from the database, use `dbDisconnect()`
+Important note. When you are done, to disconnect from the database, use `dbDisconnect()`. This is necessary to save the tables. 
 
 ```{r}
 dbDisconnect(conn=dbConn)
 ```
-
 
 
 ##Further reading: 

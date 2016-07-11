@@ -18,6 +18,7 @@ output: html_document
 Before you start: remember to set your working directory to the `module2` folder!
 
 Now, let's load up the workspace:
+
 ```{r}
 load("module2.RData")
 ```

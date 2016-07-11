@@ -62,8 +62,8 @@ rowMean <- apply(X=MouseBalanceTimeSeries[1:4,], MARGIN=1, FUN=mean)
 
 #Answer: if we subset the Data Frame into pre and post means, we can compare them.
 
-rowMeanPre <- apply(X=MouseBalanceTimeSeries[,1:3], MARGIN=1, FUN=mean)
-rowMeanPost <- apply(X=MouseBalanceTimeSeries[,4:6], MARGIN=1, FUN=mean)
+rowMeanPre <- apply(X=MouseBalanceTimeSeries[1:4,1:3], MARGIN=1, FUN=mean)
+rowMeanPost <- apply(X=MouseBalanceTimeSeries[1:4,4:6], MARGIN=1, FUN=mean)
 
 #one easy way to compare these side by side is to make them into another data frame:
 data.frame(rowMeanPre,rowMeanPost)
