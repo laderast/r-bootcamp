@@ -139,10 +139,10 @@ Similarly, we can filter our results using the WHERE statements. Note how simila
 
 ```{r}
 SQLquery2 <- "SELECT * from Mouse WHERE StrainID = 'B6'"
-
 SQLresult2 <- dbSendQuery(conn=dbConn,statement = SQLquery2)
 mouseQuery <- fetch(SQLresult2, n=-1)
 head(mouseQuery)
+
 dbClearResult(SQLresult2)
 ```
 
@@ -154,13 +154,9 @@ Let's start doing joins.  We know from our Diagram in `database-introduction.pdf
 SQLquery3 <- "SELECT * FROM Assignment, Experiment WHERE 
   Assignment.ExperimentID = Experiment.ExperimentID"
 SQLresult3 <- dbSendQuery(dbConn, SQLquery3)
-<<<<<<< HEAD
 resFrame3 <- fetch(SQLresult3, n=-1)
 head(resFrame3)
 
-=======
-resFrame <- fetch(SQLresult3, n=-1)
->>>>>>> 63aed54a2dac6927c61954cac2d1962edb7b7a5c
 dbClearResult(SQLresult3)
 ```
 
@@ -172,7 +168,6 @@ SQLquery4 <- "SELECT Experiment.Date, Assignment.LabtechID FROM
 SQLresult4 <- dbSendQuery(dbConn, SQLquery4)
 resFrame4 <- fetch(SQLresult4, n=-1)
 head(resFrame4)
-
 
 dbClearResult(SQLresult4)
 ```
@@ -195,12 +190,8 @@ Databases show their power when we add multiple conditions to the WHERE clause, 
 SQLquery5 <- "SELECT * from Mouse WHERE StrainID = 'D2' AND Weight < 70"
 SQLresult5 <- dbSendQuery(dbConn, SQLquery5)
 resFrame5 <- fetch(SQLresult5, n=-1)
-<<<<<<< HEAD
 head(resFrame5)
 
-
-=======
->>>>>>> 63aed54a2dac6927c61954cac2d1962edb7b7a5c
 dbClearResult(SQLresult5)
 ```
 
@@ -213,7 +204,6 @@ SQLquery6 <- "SELECT * FROM Mouse LEFT JOIN Assignment ON Assignment.MouseID = M
 SQLresult6 <- dbSendQuery(dbConn, SQLquery6)
 resFrame6 <- fetch(SQLresult6, n=-1)
 head(resFrame6)
-
 
 dbClearResult(SQLresult6)
 ```
@@ -234,7 +224,6 @@ SQLquery7 <- "SELECT * FROM Mouse, Experiment, Assignment WHERE Mouse.MouseID =
   Assignment.MouseID AND Experiment.ExperimentID = Assignment.ExperimentID"
 SQLresult7 <- dbSendQuery(dbConn, SQLquery7)
 resFrame7 <- fetch(SQLresult7, n=-1)
-
 head(resFrame7)
 
 dbClearResult(SQLresult7)
