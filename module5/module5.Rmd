@@ -209,7 +209,7 @@ Much like our work with the merge() function in Module 4, we can do Left outer j
 Unfortunately, right joins and full joins are not implemented in SQLite, so you have to do the majority of the work with the left outer join.
 
 ```{r}
-SQLquery6 <- "SELECT * FROM Mouse LEFT JOIN Assignment ON Assignment.MouseID = Mouse.MouseID"
+SQLquery6 <- "SELECT * FROM Mouse, Assignment LEFT JOIN Assignment ON Assignment.MouseID = Mouse.MouseID"
 SQLresult6 <- dbSendQuery(dbConn, SQLquery6)
 resFrame6 <- fetch(SQLresult6, n=-1)
 head(resFrame6)
